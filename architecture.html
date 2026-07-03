@@ -108,6 +108,52 @@
       </div>
     </section>
 
+    <section class="wrap section-compact" id="planner-orchestrator">
+      <div class="section-title">
+        <span class="eyebrow">Planner In Orchestrator</span>
+        <h2>Planner 输出的不是一句计划，而是一张可验证任务图。</h2>
+        <p>任务图节点带 precondition、expected effect、verifier 和 fallback。运行时按节点推进；如果 verifier 发现 effect 未达成，orchestrator 会回到恢复分支，而不是继续执行后续任务。</p>
+      </div>
+      <div class="planner-stage sequence-visual" aria-label="Planner in Orchestrator 动画任务图">
+        <div class="planner-left">
+          <div class="planner-prompt">
+            <strong>Goal</strong>
+            <span>把餐桌上的杯子放进水槽，然后擦桌面。</span>
+          </div>
+          <div class="planner-orchestrator">
+            <strong>Orchestrator</strong>
+            <span>reads SpatialFact Graph, risk rules and skill registry</span>
+          </div>
+        </div>
+        <div class="planner-graph" aria-hidden="true">
+          <svg viewBox="0 0 820 360" role="img" aria-label="任务节点图">
+            <defs>
+              <marker id="plannerArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z"></path></marker>
+            </defs>
+            <path class="planner-edge e1" d="M84 176 C138 176, 150 176, 204 176" marker-end="url(#plannerArrow)"></path>
+            <path class="planner-edge e2" d="M296 176 C348 176, 360 176, 412 176" marker-end="url(#plannerArrow)"></path>
+            <path class="planner-edge e3" d="M504 176 C554 176, 566 176, 616 176" marker-end="url(#plannerArrow)"></path>
+            <path class="planner-edge e4" d="M676 128 C646 82, 558 78, 502 118" marker-end="url(#plannerArrow)"></path>
+            <path class="planner-edge e5" d="M676 224 C636 286, 318 286, 254 220" marker-end="url(#plannerArrow)"></path>
+          </svg>
+          <article class="task-node task-localize"><b>01</b><strong>localize(cup)</strong><span>visible(cup) >= 0.8</span></article>
+          <article class="task-node task-grasp"><b>02</b><strong>grasp(cup)</strong><span>reachable(cup), in_gripper</span></article>
+          <article class="task-node task-place"><b>03</b><strong>place(cup,sink)</strong><span>effect: inside(cup,sink)</span></article>
+          <article class="task-node task-verify"><b>04</b><strong>verify_inside</strong><span>independent predicate check</span></article>
+          <article class="task-node task-recover"><b>R</b><strong>recover</strong><span>inspect side view -> regrasp</span></article>
+          <article class="task-node task-wipe"><b>05</b><strong>wipe(table)</strong><span>only after verified</span></article>
+          <i class="planner-cursor"></i>
+          <i class="planner-wave wave-a"></i>
+          <i class="planner-wave wave-b"></i>
+        </div>
+        <aside class="planner-caption">
+          <div><strong>节点不是文本步骤</strong><span>每个节点携带 predicate、risk 和 verifier target。</span></div>
+          <div><strong>失败有明确边界</strong><span>place 返回 success 但 inside 不成立时，图不会进入 wipe。</span></div>
+          <div><strong>恢复分支可审计</strong><span>recovery 的 inspect、regrasp 和再验证都会写入 trace。</span></div>
+        </aside>
+      </div>
+    </section>
+
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Spatial Intelligence</span>

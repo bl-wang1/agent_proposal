@@ -57,83 +57,62 @@
         <h2>ECAOS 的整体架构由四条信息流组成。</h2>
         <p>Observe 负责把目标和传感器观测写成空间事实；Decide 基于 SpatialFact Graph 选择主动感知或规划；Execute 通过 Skill Contract 调度物理技能；Verify / Learn 把验证结果和 trace 作为候选更新回写。</p>
       </div>
-      <div class="arch-figure" aria-label="ECAOS 整体架构图">
-        <div class="arch-swimlanes">
-          <div class="arch-lane">
-            <div class="arch-lane-label">Observe</div>
-            <article class="arch-card arch-source">
-              <strong>Task + Sensors</strong>
-              <span>用户目标、RGB-D/video、机器人位姿、地图、工具反馈、人类标注。</span>
-            </article>
-            <div class="arch-arrow" aria-hidden="true"></div>
-            <article class="arch-card arch-perception">
-              <strong>Spatial Perception</strong>
-              <span>对象、区域、局部几何、遮挡、可达性候选和 affordance 候选。</span>
-            </article>
-            <div class="arch-arrow" aria-hidden="true"></div>
-            <article class="arch-card arch-state primary">
-              <strong>SpatialFact Graph</strong>
-              <span>visible、reachable、on/inside/near、confidence、evidence、expires_at、risk_relevance。</span>
-            </article>
-          </div>
+      <div class="arch-figure system-cinema sequence-visual" aria-label="ECAOS 端到端动画架构图">
+        <div class="cinema-stage">
+          <div class="cinema-rail rail-main" aria-hidden="true"></div>
+          <div class="cinema-rail rail-return" aria-hidden="true"></div>
+          <i class="cinema-token token-task" aria-hidden="true"></i>
+          <i class="cinema-token token-fact" aria-hidden="true"></i>
+          <i class="cinema-token token-action" aria-hidden="true"></i>
+          <i class="cinema-token token-feedback" aria-hidden="true"></i>
 
-          <div class="arch-lane">
-            <div class="arch-lane-label">Decide</div>
-            <article class="arch-card arch-state compact">
-              <strong>SpatialFact Graph</strong>
-              <span>planner 和主动感知策略的共享状态。</span>
-            </article>
-            <div class="arch-arrow" aria-hidden="true"></div>
-            <article class="arch-card arch-active">
-              <strong>Active Perception Policy</strong>
-              <span>低置信、冲突、遮挡、可达性未知或高风险时触发 inspect、换视角、probe 或 ask_human。</span>
-            </article>
-            <div class="arch-arrow" aria-hidden="true"></div>
-            <article class="arch-card arch-planner">
-              <strong>Spatial Planner</strong>
-              <span>把目标拆成带 precondition、effect 和 verifier 的空间任务图。</span>
-            </article>
-          </div>
+          <article class="cinema-node node-input">
+            <b>01</b>
+            <strong>Input</strong>
+            <span>goal, constraints, RGB-D, robot pose, skill feedback</span>
+          </article>
+          <article class="cinema-node node-observe">
+            <b>02</b>
+            <strong>Observe</strong>
+            <span>objects, relations, occlusion, reachability candidates</span>
+          </article>
+          <article class="cinema-node node-state">
+            <b>03</b>
+            <strong>SpatialFact Graph</strong>
+            <span>confidence, evidence, conflict_set, expires_at, risk</span>
+          </article>
+          <article class="cinema-node node-planner">
+            <b>04</b>
+            <strong>Planner in Orchestrator</strong>
+            <span>task nodes with preconditions, effects and recovery edges</span>
+            <div class="mini-task-graph" aria-hidden="true">
+              <i></i><i></i><i></i><i></i><i></i>
+            </div>
+          </article>
+          <article class="cinema-node node-gate">
+            <b>05</b>
+            <strong>Gate</strong>
+            <span>allow, inspect, ask-human, block, rollback</span>
+          </article>
+          <article class="cinema-node node-skill">
+            <b>06</b>
+            <strong>Skill Runtime</strong>
+            <span>navigate, grasp, place, open, VLA/controller wrapper</span>
+          </article>
+          <article class="cinema-node node-verify">
+            <b>07</b>
+            <strong>Spatial Verifier</strong>
+            <span>checks visible, reachable, inside/on/near against effect</span>
+          </article>
+          <article class="cinema-node node-trace">
+            <b>08</b>
+            <strong>Trace + Update</strong>
+            <span>failure boundary, candidate facts, replay, shadow admission</span>
+          </article>
 
-          <div class="arch-lane">
-            <div class="arch-lane-label">Execute</div>
-            <article class="arch-card arch-planner compact">
-              <strong>Spatial Task Graph</strong>
-              <span>子目标、空间谓词、风险等级和恢复边界。</span>
-            </article>
-            <div class="arch-arrow" aria-hidden="true"></div>
-            <article class="arch-card arch-skill">
-              <strong>Skill Contract Runtime</strong>
-              <span>按 Contract 调度导航、抓取、放置、开门、VLA policy 或脚本 controller。</span>
-            </article>
-            <div class="arch-arrow" aria-hidden="true"></div>
-            <article class="arch-card arch-world">
-              <strong>Physical World</strong>
-              <span>机器人动作改变真实空间；动作结果重新进入观测和验证。</span>
-            </article>
-          </div>
-
-          <div class="arch-lane">
-            <div class="arch-lane-label">Verify / Learn</div>
-            <article class="arch-card arch-world compact">
-              <strong>Physical Result</strong>
-              <span>真实动作结果、传感器回读和执行状态。</span>
-            </article>
-            <div class="arch-arrow loop" aria-hidden="true"></div>
-            <article class="arch-card arch-verify">
-              <strong>Spatial Verifier</strong>
-              <span>检查 visible / reachable / on / inside / near 是否成立，发现 hidden spatial failure。</span>
-            </article>
-            <div class="arch-arrow loop" aria-hidden="true"></div>
-            <article class="arch-card arch-trace">
-              <strong>Trace + Candidate Update</strong>
-              <span>记录事实、主动感知、技能调用、门控决策和验证结果；只生成候选更新。</span>
-            </article>
-          </div>
-
-          <div class="arch-return">
-            <span>candidate SpatialFacts / perception updates / active policy samples</span>
-            <strong>通过 replay、shadow evaluation 和准入后，回写 SpatialFact Graph。</strong>
+          <div class="cinema-console">
+            <strong>Live episode</strong>
+            <span>cup task -> low confidence reachable(cup) -> inspect -> place(cup, sink) -> verify inside(cup, sink)</span>
           </div>
         </div>
       </div>
