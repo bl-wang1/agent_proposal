@@ -30,7 +30,7 @@
     <section class="page-hero">
       <div class="wrap">
         <span class="eyebrow">Experiment & Roadmap</span>
-        <h1>实验围绕空间编码、主动感知和空间验证展开。</h1>
+        <h1>实验围绕空间编码、主动感知和空间验证展开</h1>
         <p>评估从空间事实状态开始，经由主动感知补齐不确定事实，再用空间谓词验证任务是否真的推进。</p>
       </div>
     </section>
@@ -38,7 +38,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Evaluation Spine</span>
-        <h2>评估从空间状态、主动感知到任务成功逐级闭环。</h2>
+        <h2>评估从空间状态、主动感知到任务成功逐级闭环</h2>
       </div>
       <div class="flow-strip release-flow">
         <div><strong>1. Spatial State</strong><span>固定空间 schema、谓词、ground truth/人工标注口径和消融变量。</span></div>
@@ -64,7 +64,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Baseline Specifications</span>
-        <h2>baseline 必须只改变一个空间机制。</h2>
+        <h2>baseline 必须只改变一个空间机制</h2>
         <p>所有对比系统使用相同任务、低层导航/操作技能、安全硬约束、传感器输入和 episode seed；差异只来自空间表示、主动感知、空间验证和空间更新。</p>
       </div>
       <div class="test-matrix">
@@ -117,7 +117,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Metric Definitions</span>
-        <h2>指标必须同时覆盖空间正确性和任务收益。</h2>
+        <h2>指标必须同时覆盖空间正确性和任务收益</h2>
         <p>每个 episode 都写入空间事实、置信度、主动感知动作、空间谓词结果、人工标注、安全事件和最终任务结果；空间指标需要仿真 state、人工抽检或独立 oracle 校验。</p>
       </div>
       <div class="test-matrix">
@@ -164,7 +164,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Run Protocol</span>
-        <h2>首轮实验按 split、任务族和风险等级分层统计。</h2>
+        <h2>首轮实验按 split、任务族和风险等级分层统计</h2>
       </div>
       <div class="env-grid">
         <article>
@@ -189,7 +189,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Transfer Evaluation</span>
-        <h2>泛化实验按迁移轴分别报告。</h2>
+        <h2>泛化实验按迁移轴分别报告</h2>
         <p>跨域平均分不能说明系统到底泛化了什么。报告必须区分环境变化、物体变化和本体变化，并把失败归因回 adapter、spatial state、verifier 或 skill implementation。</p>
       </div>
       <div class="test-matrix">
@@ -224,7 +224,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Spatial Learning</span>
-        <h2>实验重点验证空间编码、主动感知和受控更新。</h2>
+        <h2>实验重点验证空间编码、主动感知和受控更新</h2>
       </div>
       <div class="env-grid">
         <article>
@@ -249,7 +249,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Quantitative Gate</span>
-        <h2>候选空间更新必须先过量化门槛，再进入真实机器人。</h2>
+        <h2>候选空间更新必须先过量化门槛，再进入真实机器人</h2>
         <p>阈值不是最终结论，而是首轮实验协议的执行标准；后续根据机器人平台、任务风险和样本量调整。</p>
       </div>
       <div class="visual-shell gate-funnel sequence-visual" aria-label="候选更新准入漏斗">
@@ -290,7 +290,7 @@
     <section id="roadmap" class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Roadmap</span>
-        <h2>阶段推进按风险递增，而不是一步到真实机器人。</h2>
+        <h2>阶段推进按风险递增，而不是一步到真实机器人</h2>
         <p>先把空间 schema、仿真闭环、评估协议和候选准入做稳定，再进入空间更新、主动策略学习和真实机器人灰度。</p>
       </div>
       <div class="timeline clean">
@@ -305,7 +305,7 @@
     <section id="risk-governance" class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Risk Governance</span>
-        <h2>风险治理要嵌入运行和发布链路。</h2>
+        <h2>风险治理要嵌入运行和发布链路</h2>
         <p>安全必须贯穿动作前检查、执行中控制、失败后恢复和上线前准入。每个动作、每次恢复、每个候选更新都必须留下可审计证据，并同时衡量安全与可用性。</p>
       </div>
       <div class="risk-grid-clear">
