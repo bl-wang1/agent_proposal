@@ -54,8 +54,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Architecture Head Figure</span>
-        <h2>ECAOS 的整体架构由四条信息流组成。</h2>
-        <p>Observe 负责把目标和传感器观测写成空间事实；Decide 基于 SpatialFact Graph 选择主动感知或规划；Execute 通过 Skill Contract 调度物理技能；Verify / Learn 把验证结果和 trace 作为候选更新回写。</p>
+        <h2>整体架构：四条信息流。</h2>
+        <p>Observe 写入空间事实；Decide 选择主动感知或任务图；Execute 调度技能；Verify / Learn 验证 effect 并回写候选更新。</p>
       </div>
       <div class="arch-figure system-cinema sequence-visual" aria-label="ECAOS 端到端动画架构图">
         <div class="cinema-stage">
@@ -121,8 +121,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Executive Overview</span>
-        <h2>研究范围、技术路线与验证协议。</h2>
-        <p>研究目标是把空间信息编码、主动空间感知、任务图规划和空间谓词验证统一为机器人 Agent 框架。</p>
+        <h2>研究范围、技术路线、验证协议。</h2>
+        <p>目标：把空间事实、主动感知、任务图和空间谓词验证统一到机器人 Agent runtime。</p>
       </div>
       <div class="overview-dashboard">
         <article class="overview-span">
@@ -136,11 +136,11 @@
         </article>
         <article>
           <strong>Approach</strong>
-          <span>以空间事实图、主动感知策略和空间谓词验证器构成研究闭环；技能契约作为接口支撑，trace 用于候选更新和长期扩展。</span>
+          <span>空间事实图、主动感知策略、空间谓词验证器构成闭环；技能契约和 trace 作为支撑接口。</span>
         </article>
         <article>
           <strong>Benchmark</strong>
-          <span>构建 10-20 个长程任务；每个任务包含 3-8 个子目标，并提供初始状态、成功判据、失败标签和跨域测试集。</span>
+          <span>10-20 个长程任务；每个任务 3-8 个子目标，覆盖初始状态、成功判据、失败标签和跨域测试。</span>
         </article>
         <article>
           <strong>Metrics</strong>
@@ -156,7 +156,7 @@
         </article>
         <article class="overview-full">
           <strong>Generalization</strong>
-          <span>框架泛化的是空间 schema、谓词、主动感知策略、技能契约和验证逻辑；传感器、地图和控制器按场景替换。</span>
+          <span>泛化空间 schema、谓词、主动感知、技能契约和验证逻辑；替换传感器、地图和控制器。</span>
         </article>
       </div>
     </section>
@@ -164,8 +164,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Three Contributions</span>
-        <h2>最小研究对象收敛为三个贡献。</h2>
-        <p>第一版不追求全功能机器人平台，而是证明空间事实如何被编码、如何基于不确定性主动补齐，以及空间 effect 如何被独立验证。</p>
+        <h2>三个核心贡献。</h2>
+        <p>第一版聚焦三件事：空间事实状态、基于不确定性的主动感知、空间谓词 verifier。</p>
       </div>
       <div class="definition-grid">
         <article><strong>SpatialFact Graph</strong><span>把空间写成可查询事实：subject、predicate、object、frame、confidence、evidence、expires_at、risk_relevance。第一版只做必要的证据融合、冲突处理和过期门控。</span></article>
@@ -178,7 +178,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Research Questions</span>
-        <h2>研究问题压缩到三个核心问题和一个支撑边界。</h2>
+        <h2>三个问题，一个支撑边界。</h2>
       </div>
       <div class="hypothesis-grid">
         <article>
@@ -203,7 +203,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">System Map</span>
-        <h2>系统由六层组成，但运行主线只有一条。</h2>
+        <h2>六层系统，一条运行主线。</h2>
       </div>
       <div class="overview-map">
         <div><strong>人机交互</strong><span>目标输入、任务卡、确认、打断、接管。</span></div>
@@ -225,7 +225,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Read Next</span>
-        <h2>从系统到验证，逐层展开。</h2>
+        <h2>从系统到验证。</h2>
       </div>
       <div class="route-grid">
         <a href="architecture.html"><strong>系统</strong><span>任务边界、交互协议、控制架构和接口契约。</span></a>

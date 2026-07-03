@@ -30,8 +30,8 @@
     <section class="page-hero">
       <div class="wrap">
         <span class="eyebrow">Runtime Flow</span>
-        <h1>一次任务怎样在 ECAOS 里流动。</h1>
-        <p>目标进入交互层，空间事实状态提供当前假设，planner 生成任务图，runtime 调度技能，verifier 检查进度，trace store 把失败转成学习证据。</p>
+        <h1>一次任务的运行路径。</h1>
+        <p>目标 -> 空间事实 -> 任务图 -> 技能调度 -> 谓词验证 -> trace 更新。</p>
       </div>
     </section>
 
@@ -69,7 +69,7 @@
           </svg>
         </div>
         <aside class="run-card">
-          <h2>运行时只回答一个问题：下一步是否真的让任务前进？</h2>
+          <h2>运行时问题：下一步是否推进任务？</h2>
           <div class="run-steps">
             <div><strong>1. Assemble</strong><span>装配目标、约束、空间事实状态、历史失败和技能统计。</span></div>
             <div><strong>2. Plan</strong><span>生成带 precondition、effect、verifier、rollback 的任务图。</span></div>
@@ -84,8 +84,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Episode Evidence Chain</span>
-        <h2>一次任务必须留下足够证据，才能进入学习闭环。</h2>
-        <p>trace 不是普通日志，而是把每一步的意图、证据、风险、结果和恢复动作串起来。只有能从 trace 复盘失败边界、重算指标并通过数据治理的片段，才允许进入候选更新。</p>
+        <h2>Trace：学习前的证据链。</h2>
+        <p>trace 串起意图、证据、风险、结果和恢复动作；只有可复盘、可治理的片段进入候选更新。</p>
       </div>
       <div class="test-matrix">
         <div class="matrix-head"><span>阶段</span><span>写入 trace 的证据</span><span>失败时如何处理</span><span>后续用途</span></div>
@@ -131,7 +131,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Failure To Update</span>
-        <h2>不是所有失败都应该训练模型。</h2>
+        <h2>失败不等于训练样本。</h2>
       </div>
       <div class="flow-strip release-flow">
         <div><strong>1. Localize</strong><span>先判断失败边界：world、planning、skill、verifier、governance、data quality。</span></div>
@@ -146,7 +146,7 @@
       <div class="pseudo-grid">
         <div class="pseudo-card">
           <h2>Runtime main loop</h2>
-          <p>主循环只做一件事：不断检查“下一步是否让任务前进”，否则恢复、求助或停止。</p>
+          <p>主循环只检查一件事：下一步是否推进任务；否则恢复、求助或停止。</p>
 <pre class="pseudo-code"><code>def run_episode(goal, constraints):
     ctx = assemble_context(
         goal=goal,
@@ -197,9 +197,9 @@
     learning_queue.enqueue_if_useful(trace)</code></pre>
         </div>
         <aside class="pseudo-note">
-          <div><strong>为什么需要 governance.check</strong><span>它把风险、权限、禁区、限速、人工确认放在 planner 外部，避免模型用一句话绕过安全边界。</span></div>
-          <div><strong>为什么 verifier 独立存在</strong><span>技能执行成功不等于任务进展成功。verifier 用状态谓词检查 effect 是否真的发生。</span></div>
-          <div><strong>为什么 trace 最后进入 learning queue</strong><span>真实轨迹先被诊断和筛选，只有有训练价值且可安全评估的样本才进入候选更新。</span></div>
+          <div><strong>governance.check</strong><span>风险、权限、禁区、限速和人工确认放在 planner 外部。</span></div>
+          <div><strong>独立 verifier</strong><span>技能 success 不等于任务 progress；effect 由状态谓词检查。</span></div>
+          <div><strong>learning queue</strong><span>真实轨迹先诊断、筛选，再进入候选更新。</span></div>
         </aside>
       </div>
     </section>

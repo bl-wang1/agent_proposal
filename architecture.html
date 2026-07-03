@@ -30,16 +30,16 @@
     <section class="page-hero">
       <div class="wrap">
         <span class="eyebrow">System</span>
-        <h1>从任务边界到运行时架构，形成同一套系统协议。</h1>
-        <p>ECAOS 将任务定义、交互协议、控制架构和接口契约统一起来。它不是一个单模型，而是一套把目标、世界状态、技能、验证、安全和学习准入串起来的机器人 Agent 控制平面。</p>
+        <h1>任务边界、运行架构、系统协议。</h1>
+        <p>ECAOS 是机器人 Agent 控制平面：目标、空间状态、技能、验证、安全和学习准入共享一套接口。</p>
       </div>
     </section>
 
     <section id="task-model" class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Task Model</span>
-        <h2>任务定义先限定系统要解决什么。</h2>
-        <p>研究对象是物理世界中的长程移动操作 Agent。首阶段可以选择可控空间做验证，但系统主线不是场景分类，而是空间事实、主动感知、技能契约、验证器和安全门控如何构成同一个 agent loop。</p>
+        <h2>任务边界先行。</h2>
+        <p>研究对象是长程移动操作 Agent。首阶段可在可控空间验证，主线是空间事实、主动感知、技能契约、验证器和安全门控构成同一个 agent loop。</p>
       </div>
       <div class="definition-grid">
         <article><strong>场景</strong><span>可建模、可验证、可治理的物理空间；环境差异由传感器、地图、运动约束和技能实现适配。</span></article>
@@ -52,8 +52,8 @@
     <section id="interaction-protocol" class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Interaction Protocol</span>
-        <h2>交互是安全控制面，不是聊天附属品。</h2>
-        <p>机器人执行前必须暴露目标理解、下一步动作、风险等级和确认需求；用户的确认、修改、打断和接管都写入 trace（执行证据链），成为恢复与学习的证据。</p>
+        <h2>交互即安全控制面。</h2>
+        <p>执行前暴露目标、下一步动作、风险和确认需求；确认、修改、打断和接管都写入 trace。</p>
       </div>
       <div class="flow-strip">
         <div><strong>1. Draft</strong><span>生成任务卡和候选任务图，不执行物理动作。</span></div>
@@ -78,8 +78,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Ordered Runtime Flow</span>
-        <h2>信息按执行顺序进入证据链。</h2>
-        <p>这里的 Contract、Trace 和 Policy 是三个系统对象：Contract 说明动作“应该满足什么”，Trace 记录执行“实际发生什么”，Policy 决定系统“接下来允许什么”。</p>
+        <h2>运行链路：证据先行。</h2>
+        <p>Contract 定义预期；Trace 记录事实；Policy 决定 allow、ask、inspect、block 或 rollback。</p>
       </div>
       <div class="definition-grid">
         <article><strong>Contract</strong><span>技能契约。定义一个动作的 intent、precondition、expected effect、verifier、rollback、risk level 和 failure code，例如 `place(cup, sink)` 必须满足 cup in gripper、sink reachable，并产生 inside(cup, sink)。</span></article>
@@ -101,9 +101,9 @@
           <i class="process-marker" aria-hidden="true"></i>
         </div>
         <aside class="visual-caption compact">
-          <div><strong>执行顺序</strong><span>信息从 Task Card 进入 Spatial Snapshot、Task Graph、Gate + Skill、Verify，最后沉淀为 Trace + Learn。</span></div>
-          <div><strong>证据类型</strong><span>Contract 约束动作，Trace 记录结果，Policy 控制风险与发布。</span></div>
-          <div><strong>替换模块不改协议</strong><span>planner、技能和 verifier 可以替换，但 evidence chain 和准入逻辑保持稳定。</span></div>
+          <div><strong>执行顺序</strong><span>Task Card -> Spatial Snapshot -> Task Graph -> Gate + Skill -> Verify -> Trace。</span></div>
+          <div><strong>证据类型</strong><span>Contract 约束动作；Trace 记录结果；Policy 控制风险。</span></div>
+          <div><strong>协议稳定</strong><span>替换 planner、技能或 verifier，不改 evidence chain。</span></div>
         </aside>
       </div>
     </section>
@@ -111,8 +111,8 @@
     <section class="wrap section-compact" id="planner-orchestrator">
       <div class="section-title">
         <span class="eyebrow">Planner In Orchestrator</span>
-        <h2>Planner 输出的不是一句计划，而是一张可验证任务图。</h2>
-        <p>任务图节点带 precondition、expected effect、verifier 和 fallback。运行时按节点推进；如果 verifier 发现 effect 未达成，orchestrator 会回到恢复分支，而不是继续执行后续任务。</p>
+        <h2>Planner 输出：可验证任务图。</h2>
+        <p>每个节点带 precondition、effect、verifier 和 fallback；effect 未达成时进入恢复分支。</p>
       </div>
       <div class="planner-stage sequence-visual" aria-label="Planner in Orchestrator 动画任务图">
         <div class="planner-left">
@@ -147,9 +147,9 @@
           <i class="planner-wave wave-b"></i>
         </div>
         <aside class="planner-caption">
-          <div><strong>节点不是文本步骤</strong><span>每个节点携带 predicate、risk 和 verifier target。</span></div>
-          <div><strong>失败有明确边界</strong><span>place 返回 success 但 inside 不成立时，图不会进入 wipe。</span></div>
-          <div><strong>恢复分支可审计</strong><span>recovery 的 inspect、regrasp 和再验证都会写入 trace。</span></div>
+          <div><strong>节点含义</strong><span>predicate、risk、verifier target。</span></div>
+          <div><strong>失败边界</strong><span>place success 但 inside 不成立，不进入 wipe。</span></div>
+          <div><strong>恢复证据</strong><span>inspect、regrasp、再验证写入 trace。</span></div>
         </aside>
       </div>
     </section>
@@ -157,7 +157,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Spatial Intelligence</span>
-        <h2>空间能力不是一次性建图，而是可主动补充、可验证、可更新的事实状态。</h2>
+        <h2>空间能力：可补充、可验证、可更新。</h2>
       </div>
       <div class="env-grid">
         <article>
@@ -182,8 +182,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Observe Pipeline</span>
-        <h2>Observe 把原始观测变成可决策的空间事实。</h2>
-        <p>这一层不只是建图或写日志，而是把传感器输入、技能反馈和人工标注规范化为带证据、置信度、过期时间和风险语义的 SpatialFact。</p>
+        <h2>Observe：观测到空间事实。</h2>
+        <p>传感器、技能反馈和人工标注被规范化为带证据、置信度、过期时间和风险语义的 SpatialFact。</p>
       </div>
       <div class="test-matrix">
         <div class="matrix-head"><span>步骤</span><span>输入/动作</span><span>输出</span><span>为什么重要</span></div>
@@ -223,7 +223,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Core Contracts</span>
-        <h2>系统靠契约连接，而不是靠 prompt 默契。</h2>
+        <h2>契约连接系统。</h2>
       </div>
       <div class="contract-grid">
         <article><strong>Skill Contract</strong><span>intent、precondition、effect、verifier、rollback、risk level、timeout、failure code。</span></article>
@@ -236,8 +236,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Runtime Interfaces</span>
-        <h2>模块边界必须能写成稳定 API。</h2>
-        <p>第一版实现不追求复杂微服务，而是先把各模块的输入输出固定下来；后续替换 planner、VLA、导航栈或 verifier 时，不改变 trace 和治理协议。</p>
+        <h2>模块边界写成稳定 API。</h2>
+        <p>第一版先固定输入输出；后续替换 planner、VLA、导航栈或 verifier，不改变 trace 和治理协议。</p>
       </div>
       <div class="test-matrix">
         <div class="matrix-head"><span>接口</span><span>输入</span><span>输出</span><span>责任边界</span></div>
@@ -283,8 +283,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Minimum Stack</span>
-        <h2>首版实现用可替换组件，不绑定单一模型路线。</h2>
-        <p>实现策略是先把 runtime、trace、verifier 和治理协议跑通；低层导航、操作和学习策略用现成机器人栈包成 SkillContract，避免第一版同时发明系统层和控制层。</p>
+        <h2>首版实现：组件可替换。</h2>
+        <p>先跑通 runtime、trace、verifier 和治理协议；低层导航、操作和学习策略封装为 SkillContract。</p>
       </div>
       <div class="env-grid">
         <article>
@@ -309,7 +309,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Core Schema</span>
-        <h2>最小数据结构只保留五类。</h2>
+        <h2>五类最小数据结构。</h2>
       </div>
       <div class="contract-grid">
         <article><strong>SkillContract</strong><span>intent、precondition、effect、verifier、rollback、risk、failure code。</span></article>
