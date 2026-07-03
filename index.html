@@ -44,7 +44,7 @@
           <h2>让机器人从“看见物体”走向“理解可行动的空间”。</h2>
           <div class="answer-list">
             <div><strong>研究对象</strong><span>面向物理世界长程任务的机器人 Agent。</span></div>
-            <div><strong>核心机制</strong><span>空间事实图、主动感知策略、空间验证器、技能契约。</span></div>
+            <div><strong>核心贡献</strong><span>结构化空间事实状态、基于不确定性的主动感知、空间谓词验证器。</span></div>
             <div><strong>验收方式</strong><span>空间 grounding、关系判断、可达性预测、遮挡处理和长程任务成功率提升。</span></div>
           </div>
         </aside>
@@ -157,7 +157,7 @@
         </article>
         <article>
           <strong>Approach</strong>
-          <span>以空间事实图、主动感知策略、空间验证器和技能契约构成闭环；trace（执行证据链）用于更新空间事实和感知器。</span>
+          <span>以空间事实图、主动感知策略和空间谓词验证器构成研究闭环；技能契约作为接口支撑，trace 用于候选更新和长期扩展。</span>
         </article>
         <article>
           <strong>Benchmark</strong>
@@ -184,22 +184,22 @@
 
     <section class="wrap section-compact">
       <div class="section-title">
-        <span class="eyebrow">Four Mechanisms</span>
-        <h2>最小研究对象收敛为四个机制。</h2>
-        <p>第一版不追求全功能机器人平台，而是证明空间事实如何被编码、主动补齐、验证并接入技能执行。</p>
+        <span class="eyebrow">Three Contributions</span>
+        <h2>最小研究对象收敛为三个贡献。</h2>
+        <p>第一版不追求全功能机器人平台，而是证明空间事实如何被编码、如何基于不确定性主动补齐，以及空间 effect 如何被独立验证。</p>
       </div>
       <div class="definition-grid">
-        <article><strong>SpatialFact Graph</strong><span>把空间写成可查询事实：subject、predicate、object、frame、confidence、evidence、expires_at、risk_relevance。最小谓词先做 visible、reachable、relation(on/inside/near)。</span></article>
-        <article><strong>Active Perception Policy</strong><span>当事实低置信度、互相冲突、被遮挡、可达性未知或影响高风险动作时，选择 inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span></article>
-        <article><strong>Spatial Verifier</strong><span>不相信裸 skill success，而是检查 visible、reachable、on/inside/near、path_clear、object_moved 等空间 effect 是否真的成立。</span></article>
-        <article><strong>Skill Contract</strong><span>每个技能声明 precondition、effect、verifier、rollback、risk 和 failure code，例如 `place(cup, sink)` 需要 cup in gripper、sink reachable，并产出 inside(cup, sink)。</span></article>
+        <article><strong>SpatialFact Graph</strong><span>把空间写成可查询事实：subject、predicate、object、frame、confidence、evidence、expires_at、risk_relevance。第一版只做必要的证据融合、冲突处理和过期门控。</span></article>
+        <article><strong>Uncertainty-Guided Active Perception</strong><span>当事实低置信度、互相冲突、被遮挡、可达性未知或影响高风险动作时，按信息收益、任务价值、动作成本和风险选择 inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span></article>
+        <article><strong>Spatial Predicate Verifier</strong><span>不相信裸 skill success，而是用多视角视觉/深度、几何状态一致性或人工/仿真 oracle 评估 visible、reachable、on/inside/near 等 effect 是否成立。</span></article>
+        <article><strong>Skill Contract as Support</strong><span>技能契约仍是必要接口，用于声明 precondition、effect、rollback、risk 和 failure code，但不作为第一阶段独立主贡献。</span></article>
       </div>
     </section>
 
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Research Questions</span>
-        <h2>研究问题也压缩到四个可验证问题。</h2>
+        <h2>研究问题压缩到三个核心问题和一个支撑边界。</h2>
       </div>
       <div class="hypothesis-grid">
         <article>
@@ -215,8 +215,8 @@
           <span>Spatial Verifier 能否比技能返回值更早发现 hidden spatial failure。</span>
         </article>
         <article>
-          <strong>Act</strong>
-          <span>Skill Contract 能否把不同导航、操作和 VLA 技能统一接入 precondition/effect/verifier，而不污染任务图。</span>
+          <strong>Support</strong>
+          <span>Skill Contract、治理和候选发布作为长期支撑，是否能在不扩大主贡献边界的情况下服务三项核心机制。</span>
         </article>
       </div>
     </section>
