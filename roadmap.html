@@ -37,7 +37,7 @@
 
     <section class="wrap section-compact">
       <div class="timeline clean">
-        <article class="phase"><div><b>0</b><h3>最小空间闭环</h3><p>定义 spatial schema、predicate、skill contract 和 trace schema；完成 planner、world model、governance、verifier、trace store 接口 stub。</p></div><span class="tag">Month 0-2</span></article>
+        <article class="phase"><div><b>0</b><h3>最小空间闭环</h3><p>定义 spatial schema、predicate、skill contract 和 trace schema；完成 planner、spatial state、governance、verifier、trace store 接口 stub。</p></div><span class="tag">Month 0-2</span></article>
         <article class="phase"><div><b>1</b><h3>空间模型与验证</h3><p>对比 text memory、2D map、3D semantic memory；验证空间谓词 verifier 和 hidden spatial failure。</p></div><span class="tag">Month 2-4</span></article>
         <article class="phase"><div><b>2</b><h3>主动空间感知</h3><p>评估 inspect、换视角、低风险探测和请求标注策略，控制延迟、风险和人类负担。</p></div><span class="tag">Month 4-7</span></article>
         <article class="phase"><div><b>3</b><h3>空间更新与策略学习</h3><p>用 trace 更新 memory fact、relation checker、reachability predictor、affordance estimator 和 active policy。</p></div><span class="tag">Month 7-10</span></article>
@@ -54,7 +54,7 @@
       <div class="env-grid">
         <article>
           <strong>Runtime asset</strong>
-          <span>空间任务图执行器、技能注册表、空间世界模型接口、治理门控、spatial verifier、trace store 和回滚机制。</span>
+          <span>空间任务图执行器、技能注册表、空间事实状态接口、治理门控、spatial verifier、trace store 和回滚机制。</span>
         </article>
         <article>
           <strong>Evaluation asset</strong>
@@ -80,7 +80,7 @@
       <div class="env-grid">
         <article>
           <strong>人员配置</strong>
-          <span>3-5 人可启动：runtime/后端、机器人控制、感知与世界模型、实验评估、产品交互/安全治理可由多人兼任。</span>
+          <span>3-5 人可启动：runtime/后端、机器人控制、感知与空间状态、实验评估、产品交互/安全治理可由多人兼任。</span>
         </article>
         <article>
           <strong>平台配置</strong>
@@ -112,7 +112,7 @@
         </div>
         <div>
           <span>Week 4-6</span>
-          <span>planner、governance、spatial world snapshot、verifier 最小闭环。</span>
+          <span>planner、governance、spatial state snapshot、verifier 最小闭环。</span>
           <span>text-memory、2D-map、ECAOS-spatial-lite 三个 baseline。</span>
           <span>能统计 spatial grounding、relation accuracy、hidden spatial failure 和 human label burden。</span>
         </div>
@@ -126,7 +126,7 @@
           <span>Week 11-13</span>
           <span>shadow evaluation、量化门槛、报告面板、关键案例回放。</span>
           <span>固定 split 的首轮消融实验。</span>
-          <span>证明空间 world model、active perception 和 verifier 是否带来显著增益；若没有，定位失败模块。</span>
+          <span>证明 SpatialFact Graph、active perception 和 verifier 是否带来显著增益；若没有，定位失败模块。</span>
         </div>
       </div>
     </section>
@@ -135,7 +135,7 @@
       <div class="section-title">
         <span class="eyebrow">Spatial Update Flywheel</span>
         <h2>空间更新闭环以失败归因为中心。</h2>
-        <p>真实观测不是直接写入世界模型，而是先被结构化、诊断、筛选和回归评估；只有通过准入门槛的候选空间更新才能进入真实机器人。</p>
+        <p>真实观测不是直接写入空间事实状态，而是先被结构化、诊断、筛选和回归评估；只有通过准入门槛的候选空间更新才能进入真实机器人。</p>
       </div>
       <div class="visual-shell flywheel-shell sequence-visual" aria-label="持续学习数据飞轮">
         <div class="flywheel-stage">

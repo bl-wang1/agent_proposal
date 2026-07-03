@@ -32,7 +32,7 @@
         <div class="hero-copy">
           <div class="eyebrow">Embodied Spatial Agent Framework</div>
           <h1>做一个能理解、感知并主动更新空间的机器人 Agent 框架。</h1>
-          <p class="hero-lead">ECAOS 把真实环境编码为空间世界模型，让 Agent 用拓扑、对象关系、可达性、遮挡、affordance 和置信度来规划、执行、验证和主动补充感知。</p>
+          <p class="hero-lead">ECAOS 把真实环境编码为空间事实状态，让 Agent 用拓扑、对象关系、可达性、遮挡、affordance 和置信度来规划、执行、验证和主动补充感知。</p>
           <div class="hero-actions">
             <a class="button" href="runtime.html">看系统如何运行</a>
             <a class="button secondary" href="task.html">看任务与验收</a>
@@ -148,7 +148,7 @@
       <div class="overview-dashboard">
         <article class="overview-span">
           <strong>Scope</strong>
-          <h3>空间世界模型驱动的移动操作 Agent 框架</h3>
+          <h3>空间事实状态驱动的移动操作 Agent 框架</h3>
           <p>服务于可建模、可验证、可主动感知的物理任务；环境差异通过空间编码、感知适配器和技能契约吸收。</p>
         </article>
         <article>
@@ -228,7 +228,7 @@
       </div>
       <div class="overview-map">
         <div><strong>人机交互</strong><span>目标输入、任务卡、确认、打断、接管。</span></div>
-        <div><strong>世界模型</strong><span>地图、物体、人、关系、时间、置信度。</span></div>
+        <div><strong>空间事实状态</strong><span>地图、物体、人、关系、时间、置信度。</span></div>
         <div><strong>Agent 推理</strong><span>目标理解、任务图、技能选择、失败解释。</span></div>
         <div><strong>技能执行</strong><span>感知、导航、操作、沟通、恢复。</span></div>
         <div><strong>安全治理</strong><span>权限、禁区、限速、力控、隐私、审计。</span></div>
@@ -236,7 +236,7 @@
       </div>
       <div class="flow-strip">
         <div><strong>1. Goal</strong><span>用户给任务，系统展示计划和风险。</span></div>
-        <div><strong>2. Model</strong><span>世界模型提供当前假设。</span></div>
+        <div><strong>2. State</strong><span>空间事实图提供当前假设。</span></div>
         <div><strong>3. Act</strong><span>runtime 调度带契约的技能。</span></div>
         <div><strong>4. Verify</strong><span>空间谓词验证器判断 expected relation/effect 是否达成。</span></div>
         <div><strong>5. Update</strong><span>trace 形成空间证据链，用于更新 SpatialFact、感知器和主动学习队列。</span></div>

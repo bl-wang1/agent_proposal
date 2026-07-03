@@ -73,7 +73,7 @@
         return Ask("permission required")
 
     if world.fact_is_stale(step.required_facts):
-        return Inspect("stale world model")
+        return Inspect("stale spatial state")
 
     return Allow(evidence=evidence)</code></pre>
         </div>

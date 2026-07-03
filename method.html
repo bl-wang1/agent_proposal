@@ -31,7 +31,7 @@
       <div class="wrap">
         <span class="eyebrow">Experiment & Roadmap</span>
         <h1>实验围绕空间编码、主动感知和空间验证展开。</h1>
-        <p>评估从空间世界模型开始，经由主动感知补齐不确定事实，再用空间谓词验证任务是否真的推进。</p>
+        <p>评估从空间事实状态开始，经由主动感知补齐不确定事实，再用空间谓词验证任务是否真的推进。</p>
       </div>
     </section>
 
@@ -89,7 +89,7 @@
         </div>
         <div>
           <span>no-active-perception</span>
-          <span>完整空间世界模型、任务图、技能契约和 verifier。</span>
+          <span>完整空间事实状态、任务图、技能契约和 verifier。</span>
           <span>inspect、换视角、低风险探测和主动标注请求。</span>
           <span>主动感知是否减少空间误判和隐藏失败。</span>
         </div>
@@ -107,7 +107,7 @@
         </div>
         <div>
           <span>ECAOS-spatial</span>
-          <span>空间世界模型、主动感知、空间谓词 verifier、技能契约、空间更新和安全门控。</span>
+          <span>空间事实状态、主动感知、空间谓词 verifier、技能契约、空间更新和安全门控。</span>
           <span>无。</span>
           <span>完整空间 Agent 框架是否带来可测增益。</span>
         </div>
@@ -132,7 +132,7 @@
           <span>Relation predicate</span>
           <span>首轮只统计 visible、reachable、on/inside/near；blocked、open、path_clear 等作为扩展谓词单独报告。</span>
           <span>所有被 planner 或 verifier 使用的空间谓词。</span>
-          <span>用于判断世界模型是否能支撑任务图，而不只是识别物体。</span>
+          <span>用于判断空间事实状态是否能支撑任务图，而不只是识别物体。</span>
         </div>
         <div>
           <span>Reachability / affordance</span>
@@ -190,7 +190,7 @@
       <div class="section-title">
         <span class="eyebrow">Transfer Evaluation</span>
         <h2>泛化实验按迁移轴分别报告。</h2>
-        <p>跨域平均分不能说明系统到底泛化了什么。报告必须区分环境变化、物体变化和本体变化，并把失败归因回 adapter、world model、verifier 或 skill implementation。</p>
+        <p>跨域平均分不能说明系统到底泛化了什么。报告必须区分环境变化、物体变化和本体变化，并把失败归因回 adapter、spatial state、verifier 或 skill implementation。</p>
       </div>
       <div class="test-matrix">
         <div class="matrix-head"><span>评估</span><span>训练域</span><span>测试域</span><span>成功标准</span></div>
@@ -295,7 +295,7 @@
       </div>
       <div class="timeline clean">
         <article class="phase"><div><b>0</b><h3>最小空间闭环</h3><p>固定 spatial schema、predicate、skill contract、trace schema；完成核心接口 stub。</p></div><span class="tag">Month 0-2</span></article>
-        <article class="phase"><div><b>1</b><h3>空间模型与验证</h3><p>验证 spatial world snapshot、predicate verifier、hidden spatial failure 和恢复边界。</p></div><span class="tag">Month 2-4</span></article>
+        <article class="phase"><div><b>1</b><h3>空间状态与验证</h3><p>验证 spatial state snapshot、predicate verifier、hidden spatial failure 和恢复边界。</p></div><span class="tag">Month 2-4</span></article>
         <article class="phase"><div><b>2</b><h3>主动空间感知</h3><p>训练/评估 inspect、换视角、低风险探测和请求标注策略，同时控制延迟和人工负担。</p></div><span class="tag">Month 4-7</span></article>
         <article class="phase"><div><b>3</b><h3>空间更新与策略学习</h3><p>把失败 trace 转成候选空间事实、感知器和 active policy，但只在离线与 shadow 中准入。</p></div><span class="tag">Month 7-10</span></article>
         <article class="phase"><div><b>4</b><h3>受控真实灰度</h3><p>每日任务、失败回流、每周灰度发布、可回滚版本和审计面板。</p></div><span class="tag">Month 10-12</span></article>
