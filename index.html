@@ -1,19 +1,19 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ECAOS | 总览</title>
-  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <title>Spatial Agent | 总览</title>
+  <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="ECAOS">
+      <a class="brand" href="index.html" aria-label="Spatial Agent">
         <span class="mark" aria-hidden="true"></span>
-        <span>ECAOS</span>
+        <span>Spatial Agent</span>
       </a>
       <nav aria-label="主导航">
         <a href="index.html" class="active" aria-current="page">总览</a>
@@ -30,9 +30,9 @@
     <section class="clarity-hero">
       <div class="wrap hero-grid">
         <div class="hero-copy">
-          <div class="eyebrow">Embodied Spatial Agent Framework</div>
-          <h1>做一个能理解、感知并主动更新空间的机器人 Agent 框架</h1>
-          <p class="hero-lead">ECAOS 把真实环境编码为空间事实状态，让 Agent 用拓扑、对象关系、可达性、遮挡、affordance 和置信度来规划、执行、验证和主动补充感知。</p>
+          <div class="eyebrow">Spatial Agent</div>
+          <h1><span>主动空间感知</span><span>机器人 Agent 框架</span></h1>
+          <p class="hero-lead">通过空间事实状态、主动感知和空间谓词验证，让机器人在长程任务中理解、执行并更新可行动空间。</p>
           <div class="hero-actions">
             <a class="button" href="runtime.html">看系统如何运行</a>
             <a class="button secondary" href="task.html">看任务与验收</a>
@@ -57,7 +57,7 @@
         <h2>整体架构：四条信息流</h2>
         <p>Observe 写入空间事实；Decide 选择主动感知或任务图；Execute 调度技能；Verify / Learn 验证 effect 并回写候选更新。</p>
       </div>
-      <div class="arch-figure system-cinema sequence-visual" aria-label="ECAOS 端到端动画架构图">
+      <div class="arch-figure system-cinema sequence-visual" aria-label="Spatial Agent 端到端动画架构图">
         <div class="cinema-stage">
           <div class="cinema-rail rail-main" aria-hidden="true"></div>
           <div class="cinema-rail rail-return" aria-hidden="true"></div>
@@ -127,7 +127,7 @@
       <div class="overview-dashboard">
         <article class="overview-span">
           <strong>Scope</strong>
-          <h3>空间事实状态驱动的移动操作 Agent 框架</h3>
+          <h3>主动空间感知机器人 Agent 框架</h3>
           <p>服务于可建模、可验证、可主动感知的物理任务；环境差异通过空间编码、感知适配器和技能契约吸收。</p>
         </article>
         <article>
@@ -167,11 +167,10 @@
         <h2>三个核心贡献</h2>
         <p>第一版聚焦三件事：空间事实状态、基于不确定性的主动感知、空间谓词 verifier。</p>
       </div>
-      <div class="definition-grid">
+      <div class="definition-grid three-up">
         <article><strong>SpatialFact Graph</strong><span>把空间写成可查询事实：subject、predicate、object、frame、confidence、evidence、expires_at、risk_relevance。第一版只做必要的证据融合、冲突处理和过期门控。</span></article>
         <article><strong>Uncertainty-Guided Active Perception</strong><span>当事实低置信度、互相冲突、被遮挡、可达性未知或影响高风险动作时，按信息收益、任务价值、动作成本和风险选择 inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span></article>
         <article><strong>Spatial Predicate Verifier</strong><span>不相信裸 skill success，而是用多视角视觉/深度、几何状态一致性或人工/仿真 oracle 评估 visible、reachable、on/inside/near 等 effect 是否成立。</span></article>
-        <article><strong>Skill Contract as Support</strong><span>技能契约仍是必要接口，用于声明 precondition、effect、rollback、risk 和 failure code，但不作为第一阶段独立主贡献。</span></article>
       </div>
     </section>
 
@@ -193,7 +192,7 @@
           <strong>Verify</strong>
           <span>Spatial Verifier 能否比技能返回值更早发现 hidden spatial failure。</span>
         </article>
-        <article>
+        <article class="support-span">
           <strong>Support</strong>
           <span>Skill Contract、治理和候选发布作为长期支撑，是否能在不扩大主贡献边界的情况下服务三项核心机制。</span>
         </article>
@@ -222,25 +221,11 @@
       </div>
     </section>
 
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Read Next</span>
-        <h2>从系统到验证</h2>
-      </div>
-      <div class="route-grid">
-        <a href="architecture.html"><strong>系统</strong><span>任务边界、交互协议、控制架构和接口契约。</span></a>
-        <a href="runtime.html"><strong>运行</strong><span>系统框架图和具体 episode 演示。</span></a>
-        <a href="method.html"><strong>实验路线</strong><span>空间编码、主动感知、baseline、指标、阶段路线和风险治理。</span></a>
-        <a href="method.html#risk-governance"><strong>风险治理</strong><span>物理安全、数据治理、候选发布和策略审计。</span></a>
-        <a href="sources.html"><strong>参考</strong><span>机器人基础模型、Agent 框架和内部思考来源。</span></a>
-      </div>
-    </section>
-
   </main>
 
   <footer>
     <div class="wrap">
-      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>Spatial Agent Research Proposal · 2026-06-28</span>
       <span>详细文档：proposal.md</span>
     </div>
   </footer>

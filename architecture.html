@@ -1,19 +1,19 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ECAOS | 系统</title>
-  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <title>Spatial Agent | 系统</title>
+  <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="ECAOS">
+      <a class="brand" href="index.html" aria-label="Spatial Agent">
         <span class="mark" aria-hidden="true"></span>
-        <span>ECAOS</span>
+        <span>Spatial Agent</span>
       </a>
       <nav aria-label="主导航">
         <a href="index.html">总览</a>
@@ -31,7 +31,7 @@
       <div class="wrap">
         <span class="eyebrow">System</span>
         <h1>任务边界、运行架构、系统协议</h1>
-        <p>ECAOS 是机器人 Agent 控制平面：目标、空间状态、技能、验证、安全和学习准入共享一套接口。</p>
+        <p>Spatial Agent 是机器人 Agent 控制平面：目标、空间状态、技能、验证、安全和学习准入共享一套接口。</p>
       </div>
     </section>
 
@@ -64,30 +64,19 @@
       </div>
     </section>
 
-    <section id="architecture-layers" class="wrap section-compact">
-      <div class="layer-map">
-        <div><b>1</b><strong>人机交互层</strong><span>目标输入、澄清确认、状态反馈、打断纠错、示教和授权。</span></div>
-        <div><b>2</b><strong>空间状态层</strong><span>地图、坐标、物体、人、状态、关系、时间和置信度。</span></div>
-        <div><b>3</b><strong>Agent 推理层</strong><span>理解目标、拆解任务、选择工具、监控执行、解释失败。</span></div>
-        <div><b>4</b><strong>技能执行层</strong><span>感知、导航、操作、沟通、恢复、回充、远程接管。</span></div>
-        <div><b>5</b><strong>安全治理层</strong><span>风险分级、权限确认、禁区、限速、力控、隐私、审计。</span></div>
-        <div><b>6</b><strong>评估运维层</strong><span>仿真、真实回放、日志、指标、失败分类、灰度发布。</span></div>
-      </div>
-    </section>
-
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Ordered Runtime Flow</span>
         <h2>运行链路：证据先行</h2>
         <p>Contract 定义预期；Trace 记录事实；Policy 决定 allow、ask、inspect、block 或 rollback。</p>
       </div>
-      <div class="definition-grid">
+      <div class="definition-grid three-up">
         <article><strong>Contract</strong><span>技能契约。定义一个动作的 intent、precondition、expected effect、verifier、rollback、risk level 和 failure code，例如 `place(cup, sink)` 必须满足 cup in gripper、sink reachable，并产生 inside(cup, sink)。</span></article>
         <article><strong>Trace</strong><span>执行证据链。记录 spatial state snapshot、空间事实、主动感知动作、skill call、gate decision、verifier result、失败边界和 human label，用于复盘和更新空间事实状态。</span></article>
         <article><strong>Policy</strong><span>决策与准入规则。根据 Contract 和 Trace 决定 allow、ask、inspect、block、rollback，以及候选空间事实、感知器或 active policy 能否进入 shadow/灰度。</span></article>
       </div>
       <div class="visual-shell process-visual sequence-visual">
-        <div class="process-map" aria-label="ECAOS 信息按顺序进入证据链">
+        <div class="process-map" aria-label="Spatial Agent 信息按顺序进入证据链">
           <div class="process-line" aria-hidden="true"></div>
           <div class="process-step step-1"><b>01</b><strong>Task Card</strong><span>goal, object, risk</span><em>用户确认的是任务卡</em></div>
           <div class="process-step step-2"><b>02</b><strong>Spatial Snapshot</strong><span>facts, confidence</span><em>低置信度先 inspect</em></div>
@@ -283,7 +272,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Minimum Stack</span>
-        <h2>首版实现：组件可替换</h2>
+        <h2>组件可替换</h2>
         <p>先跑通 runtime、trace、verifier 和治理协议；低层导航、操作和学习策略封装为 SkillContract。</p>
       </div>
       <div class="env-grid">
@@ -306,25 +295,11 @@
       </div>
     </section>
 
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Core Schema</span>
-        <h2>五类最小数据结构</h2>
-      </div>
-      <div class="contract-grid">
-        <article><strong>SkillContract</strong><span>intent、precondition、effect、verifier、rollback、risk、failure code。</span></article>
-        <article><strong>ImplementationAdapter</strong><span>embodiment、controller、safety limits、contract tests。</span></article>
-        <article><strong>SpatialFact</strong><span>subject、predicate、object、frame、confidence、evidence、source_viewpoint、conflict_set、last_verified_at、expires_at、risk_relevance。</span></article>
-        <article><strong>ActivePerceptionAction</strong><span>trigger、target、candidate_pose、expected_information_gain、cost、risk、result_label。</span></article>
-        <article><strong>TraceEvent</strong><span>step、world diff、skill I/O、predicate result、failure boundary、human decision。</span></article>
-      </div>
-    </section>
-
   </main>
 
   <footer>
     <div class="wrap">
-      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>Spatial Agent Research Proposal · 2026-06-28</span>
       <span>详细文档：proposal.md</span>
     </div>
   </footer>

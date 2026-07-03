@@ -1,19 +1,19 @@
-﻿<!doctype html>
+<!doctype html>
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>ECAOS | 实验路线</title>
-  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <title>Spatial Agent | 实验路线</title>
+  <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
 </head>
 <body>
   <header class="topbar">
     <div class="topbar-inner">
-      <a class="brand" href="index.html" aria-label="ECAOS">
+      <a class="brand" href="index.html" aria-label="Spatial Agent">
         <span class="mark" aria-hidden="true"></span>
-        <span>ECAOS</span>
+        <span>Spatial Agent</span>
       </a>
       <nav aria-label="主导航">
         <a href="index.html">总览</a>
@@ -54,7 +54,7 @@
         <div><strong>首轮最小谓词</strong><span>只先评估 `visible(object)`、`reachable(object_or_pose)`、`relation(a,b)=on/inside/near`；其他 path_clear、occluded_by、placeable_on 作为第二轮扩展。</span></div>
         <div><strong>代表任务族</strong><span>先用“找到杯子、确认可达、放进水槽、验证 inside(cup, sink)”贯穿实验；再扩展到整理区域、开门取物和递送轻物。</span></div>
         <div><strong>任务集</strong><span>10-20 个物理 Agent 长程任务，每个任务 3-8 个子目标；按空间关系、遮挡、可达性、动态变化和风险等级分层。</span></div>
-        <div><strong>Baseline</strong><span>text-memory、2D-map、3D-semantic-memory、no-active-perception、oracle-perception、ECAOS-spatial；所有系统共享同一低层技能库和安全硬约束。</span></div>
+        <div><strong>Baseline</strong><span>text-memory、2D-map、3D-semantic-memory、no-active-perception、oracle-perception、spatial-agent-spatial；所有系统共享同一低层技能库和安全硬约束。</span></div>
         <div><strong>指标</strong><span>spatial grounding、relation predicate accuracy、reachability accuracy、stale memory detection、active learning gain、hidden spatial failure、long-horizon SR。</span></div>
         <div><strong>消融</strong><span>分别证明空间编码、空间谓词验证、主动感知、空间更新和安全门控对最终表现的贡献。</span></div>
         <div><strong>发布门槛</strong><span>候选空间事实或感知器必须提升空间指标，不增加高风险误动作、过度 inspect、过度询问和旧空间回归退化。</span></div>
@@ -106,7 +106,7 @@
           <span>空间更新是否减少重复失败。</span>
         </div>
         <div>
-          <span>ECAOS-spatial</span>
+          <span>spatial-agent-spatial</span>
           <span>空间事实状态、主动感知、空间谓词 verifier、技能契约、空间更新和安全门控。</span>
           <span>无。</span>
           <span>完整空间 Agent 框架是否带来可测增益。</span>
@@ -320,7 +320,7 @@
 
   <footer>
     <div class="wrap">
-      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>Spatial Agent Research Proposal · 2026-06-28</span>
       <span>详细文档：proposal.md</span>
     </div>
   </footer>
