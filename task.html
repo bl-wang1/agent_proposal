@@ -1,0 +1,210 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECAOS | 任务</title>
+  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/clarity.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="ECAOS">
+        <span class="mark" aria-hidden="true"></span>
+        <span>ECAOS</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="index.html">总览</a>
+        <a href="architecture.html" class="active" aria-current="page">系统</a>
+        <a href="runtime.html">运行</a>
+        <a href="method.html">实验路线</a>
+        <a href="sources.html">参考</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <main id="top" class="clarity-main">
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">Task Definition</span>
+        <h1>先把“机器人 Agent 要做什么”定义清楚。</h1>
+        <p>研究对象是物理世界中的长程机器人 Agent 任务，而不是单步抓取或单一导航 demo。任务必须同时考验空间感知、世界模型、规划、技能执行、进度验证和安全治理。</p>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="definition-grid">
+        <article><strong>场景</strong><span>机器人需要在真实物理空间中理解对象、区域、路径、遮挡、可达性和风险；具体场景只作为实验载体。</span></article>
+        <article><strong>任务</strong><span>巡检、找物、递送轻物、整理指定区域、对象转移、设备开关。每个任务 3-8 个子目标。</span></article>
+        <article><strong>输入</strong><span>语音/文本目标、手机/平板任务卡确认、环境观测、空间记忆、安全约束和用户偏好。</span></article>
+        <article><strong>输出</strong><span>任务图、技能序列、检查结果、失败归因、恢复动作、完整 trace 和候选更新报告。</span></article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Generalization Boundary</span>
+        <h2>室内/室外不是系统边界，治理接口才是系统边界。</h2>
+        <p>ECAOS 的研究对象不是某一个场景，而是“目标 - 世界状态 - 技能执行 - 验证 - 学习准入”的闭环协议。不同环境替换底层感知、地图、运动和技能实现，但不改变任务图、契约、验证和安全治理逻辑。</p>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>跨环境不变量</strong>
+          <span>任务图、子目标谓词、技能契约、风险分级、进度验证、失败归因、trace schema、候选发布门槛。</span>
+        </article>
+        <article>
+          <strong>环境适配项</strong>
+          <span>传感器组合、地图表达、定位方式、运动约束、可用技能库、通信链路、天气/光照/地面条件。</span>
+        </article>
+        <article>
+          <strong>首阶段验证域</strong>
+          <span>首阶段选择可控任务是为了减少不可控变量，优先验证空间事实图、主动感知、验证器和技能契约是否成立。</span>
+        </article>
+        <article>
+          <strong>跨域扩展路径</strong>
+          <span>在园区配送、仓储搬运、户外低速巡检等域中复用上层协议，替换导航、感知、安全半径和技能实现。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Transfer Axes</span>
+        <h2>泛化要拆成三个可测迁移轴。</h2>
+        <p>“跨环境、跨物体、跨本体”不能混在一个平均成功率里。ECAOS 需要分别证明上层任务图和技能契约能复用，底层 adapter 能替换，并且失败能被归因到正确边界。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>迁移轴</span><span>保持不变</span><span>允许变化</span><span>主要失败边界</span></div>
+        <div>
+          <span>跨环境</span>
+          <span>任务目标、成功谓词、技能契约、风险等级和发布门槛。</span>
+          <span>地图、光照、障碍物、人流、通信质量、可达路径和定位方式。</span>
+          <span>world_state_error、navigation_failure、stale_memory。</span>
+        </div>
+        <div>
+          <span>跨物体</span>
+          <span>操作意图、容器/支撑/开关等关系谓词、验证逻辑。</span>
+          <span>外观、大小、材质、抓取姿态、遮挡和相似干扰物。</span>
+          <span>perception_error、affordance_error、verifier_uncertain。</span>
+        </div>
+        <div>
+          <span>跨本体</span>
+          <span>task graph、SkillContract、failure code、trace schema 和 verifier 目标。</span>
+          <span>机械臂自由度、末端执行器、导航底盘、控制器、动作空间和安全半径。</span>
+          <span>implementation_mismatch、controller_failure、safety_margin_error。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Task Suite</span>
+        <h2>任务集必须能复现长程失败，而不是只展示成功样例。</h2>
+        <p>首轮实验使用 10-20 个长程任务，按任务机制而不是场景名字划分；每类任务都要给出初始状态、子目标谓词、成功条件、失败标签和恢复选项。</p>
+      </div>
+      <div class="test-matrix task-suite">
+        <div class="matrix-head"><span>任务族</span><span>示例任务</span><span>主要考察能力</span><span>测试划分</span></div>
+        <div>
+          <span>巡检与状态确认</span>
+          <span>检查会议室门窗、电源、白板和桌面遗留物。</span>
+          <span>空间覆盖、状态谓词、低风险自主导航、异常上报。</span>
+          <span>train: 常见布局；test: 物体位置扰动；holdout: 未见房间。</span>
+        </div>
+        <div>
+          <span>找物与定位</span>
+          <span>找到用户指定杯子、工具、文件夹或包裹，并返回位置证据。</span>
+          <span>目标澄清、视觉定位、记忆时效、低置信度 inspect。</span>
+          <span>train: 已知物体；test: 未见摆放；holdout: 相似干扰物。</span>
+        </div>
+        <div>
+          <span>递送与对象转移</span>
+          <span>把轻物从 A 点送到 B 点，必要时等待用户确认接收。</span>
+          <span>导航、抓取、路径风险、交互确认、交接状态验证。</span>
+          <span>train: 固定路线；test: 动态障碍；holdout: 新收件人/新区域。</span>
+        </div>
+        <div>
+          <span>整理与清洁前置</span>
+          <span>把桌面杯子放入水槽，再擦拭指定桌面区域。</span>
+          <span>任务图、容器关系验证、失败恢复、后续步骤依赖。</span>
+          <span>train: 单对象；test: 多对象；holdout: 容器边缘/遮挡失败。</span>
+        </div>
+        <div>
+          <span>设备与权限动作</span>
+          <span>开关灯、按按钮、操作低风险设备或进入受限区域前确认。</span>
+          <span>权限、不可逆动作识别、安全门控、用户接管。</span>
+          <span>train: 明确授权；test: 模糊指令；holdout: 权限冲突。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Failure Labels</span>
+        <h2>失败必须被标注到可行动的系统边界。</h2>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>world_state_error</strong>
+          <span>地图、物体位置、关系或 affordance 过期；恢复策略是 inspect、重新定位或降低记忆置信度。</span>
+        </article>
+        <article>
+          <strong>planning_error</strong>
+          <span>任务图顺序错误、缺少前置条件或恢复循环；恢复策略是重新分解目标并加入 verifier 约束。</span>
+        </article>
+        <article>
+          <strong>skill_failure</strong>
+          <span>抓取、放置、导航或设备操作失败；恢复策略是换角度、换技能版本、rollback 或请求协助。</span>
+        </article>
+        <article>
+          <strong>governance_event</strong>
+          <span>权限、禁区、近人、过度拦截或人工接管触发；恢复策略是解释原因、调整风险阈值或终止任务。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">MVP Acceptance</span>
+        <h2>最小可验收版本要满足五件事。</h2>
+      </div>
+      <div class="check-grid">
+        <div><b>1</b><span>用户能自然给目标，系统能复述任务和对象。</span></div>
+        <div><b>2</b><span>执行前展示下一步动作、风险等级和是否需要确认。</span></div>
+        <div><b>3</b><span>观察和导航可自主；抓取、敏感区域、设备操作需要确认。</span></div>
+        <div><b>4</b><span>不确定时停下来询问，而不是靠猜继续执行。</span></div>
+        <div><b>5</b><span>失败后能解释原因，并给出重试、换角度、请求协助或安全暂停。</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="example-panel">
+        <div>
+          <span class="eyebrow">Example Episode</span>
+          <h2>杯子入水槽后擦桌面。</h2>
+          <p>这个任务包含对象转移、容器关系验证和后续清洁，能暴露进度误判、技能选择和恢复策略问题。</p>
+        </div>
+        <ol>
+          <li>生成任务图：grasp(cup) → place(cup, sink) → verify → wipe(table)。</li>
+          <li>执行前确认对象和风险；靠近人身或不可逆动作需要确认。</li>
+          <li>place 后 verifier 检查 object_inside(cup, sink)。</li>
+          <li>若杯子停在边缘，诊断 near-edge placement，调用 regrasp + place_deeper。</li>
+          <li>trace 写入失败账本，用于训练 recovery policy 和更新 affordance memory。</li>
+        </ol>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>详细文档：proposal.md</span>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

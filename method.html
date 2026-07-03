@@ -1,0 +1,330 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECAOS | 实验路线</title>
+  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/clarity.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="ECAOS">
+        <span class="mark" aria-hidden="true"></span>
+        <span>ECAOS</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="index.html">总览</a>
+        <a href="architecture.html">系统</a>
+        <a href="runtime.html">运行</a>
+        <a href="method.html" class="active" aria-current="page">实验路线</a>
+        <a href="sources.html">参考</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <main id="top" class="clarity-main">
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">Experiment & Roadmap</span>
+        <h1>实验围绕空间编码、主动感知和空间验证展开。</h1>
+        <p>评估从空间世界模型开始，经由主动感知补齐不确定事实，再用空间谓词验证任务是否真的推进。</p>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Evaluation Spine</span>
+        <h2>评估从空间状态、主动感知到任务成功逐级闭环。</h2>
+      </div>
+      <div class="flow-strip release-flow">
+        <div><strong>1. Spatial State</strong><span>固定空间 schema、谓词、ground truth/人工标注口径和消融变量。</span></div>
+        <div><strong>2. Active Sense</strong><span>记录 inspect、换视角、低风险探测和请求标注前后的信息增益。</span></div>
+        <div><strong>3. Verify</strong><span>每个 episode 写入空间谓词、技能 effect、hidden spatial failure 和恢复动作。</span></div>
+        <div><strong>4. Update</strong><span>失败样本只生成候选空间事实、感知器或 active policy 更新，先 shadow 再准入。</span></div>
+        <div><strong>5. Safety</strong><span>低置信度空间事实不能驱动高风险动作，安全门控和人工确认贯穿执行。</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="protocol-table">
+        <div><strong>首轮最小谓词</strong><span>只先评估 `visible(object)`、`reachable(object_or_pose)`、`relation(a,b)=on/inside/near`；其他 path_clear、occluded_by、placeable_on 作为第二轮扩展。</span></div>
+        <div><strong>代表任务族</strong><span>先用“找到杯子、确认可达、放进水槽、验证 inside(cup, sink)”贯穿实验；再扩展到整理区域、开门取物和递送轻物。</span></div>
+        <div><strong>任务集</strong><span>10-20 个物理 Agent 长程任务，每个任务 3-8 个子目标；按空间关系、遮挡、可达性、动态变化和风险等级分层。</span></div>
+        <div><strong>Baseline</strong><span>text-memory、2D-map、3D-semantic-memory、no-active-perception、oracle-perception、ECAOS-spatial；所有系统共享同一低层技能库和安全硬约束。</span></div>
+        <div><strong>指标</strong><span>spatial grounding、relation predicate accuracy、reachability accuracy、stale memory detection、active learning gain、hidden spatial failure、long-horizon SR。</span></div>
+        <div><strong>消融</strong><span>分别证明空间编码、空间谓词验证、主动感知、空间更新和安全门控对最终表现的贡献。</span></div>
+        <div><strong>发布门槛</strong><span>候选空间事实或感知器必须提升空间指标，不增加高风险误动作、过度 inspect、过度询问和旧空间回归退化。</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Baseline Specifications</span>
+        <h2>baseline 必须只改变一个空间机制。</h2>
+        <p>所有对比系统使用相同任务、低层导航/操作技能、安全硬约束、传感器输入和 episode seed；差异只来自空间表示、主动感知、空间验证和空间更新。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>系统</span><span>保留能力</span><span>禁用能力</span><span>用于回答的问题</span></div>
+        <div>
+          <span>text-memory</span>
+          <span>固定任务脚本、同一技能库、同一安全硬约束。</span>
+          <span>结构化空间图、可达性、遮挡、空间谓词 verifier。</span>
+          <span>纯文本上下文是否足以支撑空间任务。</span>
+        </div>
+        <div>
+          <span>2D-map</span>
+          <span>拓扑/占据地图、同一技能库和安全硬约束。</span>
+          <span>对象关系、局部几何、可操作面、affordance 和时间戳。</span>
+          <span>二维地图是否足以支持操作型空间推理。</span>
+        </div>
+        <div>
+          <span>3D-semantic-memory</span>
+          <span>对象实例、3D 位置、语义关系和任务图。</span>
+          <span>主动感知、stale detection、affordance posterior。</span>
+          <span>静态 3D 语义记忆能否处理动态变化和遮挡。</span>
+        </div>
+        <div>
+          <span>no-active-perception</span>
+          <span>完整空间世界模型、任务图、技能契约和 verifier。</span>
+          <span>inspect、换视角、低风险探测和主动标注请求。</span>
+          <span>主动感知是否减少空间误判和隐藏失败。</span>
+        </div>
+        <div>
+          <span>oracle-perception</span>
+          <span>仿真 state 或人工 oracle 空间事实。</span>
+          <span>真实感知误差和主动感知策略。</span>
+          <span>估计空间感知误差对上限的影响。</span>
+        </div>
+        <div>
+          <span>no-spatial-update</span>
+          <span>运行期空间模型和主动感知。</span>
+          <span>从失败 trace 更新 SpatialFact、stale detector 和 affordance。</span>
+          <span>空间更新是否减少重复失败。</span>
+        </div>
+        <div>
+          <span>ECAOS-spatial</span>
+          <span>空间世界模型、主动感知、空间谓词 verifier、技能契约、空间更新和安全门控。</span>
+          <span>无。</span>
+          <span>完整空间 Agent 框架是否带来可测增益。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Metric Definitions</span>
+        <h2>指标必须同时覆盖空间正确性和任务收益。</h2>
+        <p>每个 episode 都写入空间事实、置信度、主动感知动作、空间谓词结果、人工标注、安全事件和最终任务结果；空间指标需要仿真 state、人工抽检或独立 oracle 校验。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>指标</span><span>计算口径</span><span>分母</span><span>解释边界</span></div>
+        <div>
+          <span>Spatial grounding</span>
+          <span>对象、区域、方位和引用表达是否绑定到正确空间实体。</span>
+          <span>所有带空间引用的目标和中间状态。</span>
+          <span>需要仿真 state 或人工标注作 oracle，不能只依赖系统自身判断。</span>
+        </div>
+        <div>
+          <span>Relation predicate</span>
+          <span>首轮只统计 visible、reachable、on/inside/near；blocked、open、path_clear 等作为扩展谓词单独报告。</span>
+          <span>所有被 planner 或 verifier 使用的空间谓词。</span>
+          <span>用于判断世界模型是否能支撑任务图，而不只是识别物体。</span>
+        </div>
+        <div>
+          <span>Reachability / affordance</span>
+          <span>reachable、graspable、placeable、path_clear 和 skill success prior 是否准确。</span>
+          <span>所有需要选择路径、视角、抓取或放置的子目标。</span>
+          <span>直接衡量空间理解是否转化为可行动判断。</span>
+        </div>
+        <div>
+          <span>Active learning gain</span>
+          <span>inspect、换视角、低风险探测或请求标注后，空间错误率和任务失败率的下降。</span>
+          <span>所有主动感知触发事件。</span>
+          <span>需要同时报告动作成本、延迟和 human label burden。</span>
+        </div>
+        <div>
+          <span>Stale memory detection</span>
+          <span>过期对象位置、状态、路径和 affordance 事实被发现并降权的比例。</span>
+          <span>所有被动态扰动或跨 episode 复用的空间事实。</span>
+          <span>用于证明系统能处理动态真实环境，而不是静态地图。</span>
+        </div>
+        <div>
+          <span>Hidden spatial failure / Safety</span>
+          <span>技能返回 success 但空间 effect 未达成；同时统计 unsafe event、near miss 和 unnecessary query。</span>
+          <span>所有技能成功回报、主动感知和 gate decision。</span>
+          <span>安全、空间验证和可用性必须成对汇报，避免系统通过过度保守获得表面安全。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Run Protocol</span>
+        <h2>首轮实验按 split、任务族和风险等级分层统计。</h2>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>仿真评估</strong>
+          <span>每个任务族、每个 baseline、每个 split 至少 20 个 episode；随机化物体位置、遮挡、初始姿态、可达性和动态障碍。</span>
+        </article>
+        <article>
+          <strong>真实 shadow</strong>
+          <span>每个任务族选 3-5 个代表 episode；候选系统只预测空间事实、主动感知动作、门控和恢复，不直接覆盖线上安全策略。</span>
+        </article>
+        <article>
+          <strong>统计报告</strong>
+          <span>按任务族、split、失败标签和风险等级报告均值、置信区间、失败案例和关键 trace 回放。</span>
+        </article>
+        <article>
+          <strong>人工审计</strong>
+          <span>抽样检查空间谓词、主动感知收益、unnecessary query、overblocking 和 ask-human 事件，防止自动标注把错误空间事实误记为成功。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Transfer Evaluation</span>
+        <h2>泛化实验按迁移轴分别报告。</h2>
+        <p>跨域平均分不能说明系统到底泛化了什么。报告必须区分环境变化、物体变化和本体变化，并把失败归因回 adapter、world model、verifier 或 skill implementation。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>评估</span><span>训练域</span><span>测试域</span><span>成功标准</span></div>
+        <div>
+          <span>Cross-environment</span>
+          <span>固定任务族、已知物体、已知机器人本体。</span>
+          <span>未见布局、未见房间、动态障碍或低速户外/仓储区域。</span>
+          <span>cross-domain SR 不低于训练域 90%，且 world_state_error 可解释。</span>
+        </div>
+        <div>
+          <span>Cross-object</span>
+          <span>已知容器/工具类别，常见形状和材质。</span>
+          <span>未见实例、相似干扰物、不同尺寸/材质/抓取点。</span>
+          <span>verifier uncertainty 能触发 inspect；误抓和错误放置不增加。</span>
+        </div>
+        <div>
+          <span>Cross-embodiment</span>
+          <span>同一 SkillContract 在主机器人上通过 contract tests。</span>
+          <span>替换机械臂、夹爪、底盘或仿真/真实桥接 adapter。</span>
+          <span>cross-embodiment delta 受控，失败能归因到 implementation 而不是污染 task graph。</span>
+        </div>
+        <div>
+          <span>Adapter admission</span>
+          <span>旧 implementation 的稳定版本和回归集。</span>
+          <span>新 adapter、adapter routing 或 skill implementation candidate。</span>
+          <span>旧任务不退化，unsafe event 为 0，hidden failure 与 overblocking 不恶化。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Spatial Learning</span>
+        <h2>实验重点验证空间编码、主动感知和受控更新。</h2>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>空间编码</strong>
+          <span>比较文本记忆、2D map、3D semantic memory 和 SpatialFact Graph 对 visible、reachable、on/inside/near 的影响。</span>
+        </article>
+        <article>
+          <strong>主动感知</strong>
+          <span>测试 inspect、换视角、低风险探测和主动标注是否降低遮挡、关系误判和可达性错误。</span>
+        </article>
+        <article>
+          <strong>空间验证</strong>
+          <span>用空间谓词 verifier 检查 on、inside、reachable、path_clear、object_moved 等 effect，观察 hidden spatial failure 是否下降。</span>
+        </article>
+        <article>
+          <strong>受控更新</strong>
+          <span>失败 trace 只生成候选空间事实、候选感知器或候选 active policy；通过回放、shadow 和安全检查后才进入线上。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Quantitative Gate</span>
+        <h2>候选空间更新必须先过量化门槛，再进入真实机器人。</h2>
+        <p>阈值不是最终结论，而是首轮实验协议的执行标准；后续根据机器人平台、任务风险和样本量调整。</p>
+      </div>
+      <div class="visual-shell gate-funnel sequence-visual" aria-label="候选更新准入漏斗">
+        <div class="funnel-stage">
+          <div class="funnel-row wide"><strong>Candidate Bundle</strong><span>SpatialFact / perception / active policy</span></div>
+          <div class="funnel-row"><strong>Schema + Data</strong><span>predicate, label, confidence</span></div>
+          <div class="funnel-row"><strong>Regression</strong><span>old spatial facts, safety cases</span></div>
+          <div class="funnel-row"><strong>Shadow Run</strong><span>calibration, query burden</span></div>
+          <div class="funnel-row narrow"><strong>Gray Release</strong><span>rollback ready</span></div>
+          <i class="funnel-pulse" aria-hidden="true"></i>
+        </div>
+        <aside class="visual-caption compact">
+          <div><strong>候选先被收窄</strong><span>任何空间 schema、标签质量或安全不合格的更新都不进入效果比较。</span></div>
+          <div><strong>新旧空间事实同时检查</strong><span>只提升新场景但损害旧关系、旧可达性或安全集的候选会被拒绝。</span></div>
+          <div><strong>灰度之前必须可回滚</strong><span>shadow run 通过后仍只进入受控发布，并保留版本回退证据。</span></div>
+        </aside>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>空间收益</strong>
+          <span>spatial grounding、relation predicate 或 reachability 指标提升，且 long-horizon SR 不下降。</span>
+        </article>
+        <article>
+          <strong>旧空间事实保持</strong>
+          <span>regression suite 中旧对象、旧关系、旧路径和旧可达性判断不退化。</span>
+        </article>
+        <article>
+          <strong>安全约束</strong>
+          <span>仿真与真实 shadow run 中 unsafe event 为 0；急停、近碰撞、误抓和越权动作必须单独归档。</span>
+        </article>
+        <article>
+          <strong>可用性约束</strong>
+          <span>unnecessary query、overblocking、inspect、ask-human、abort 分布不能异常漂移，主动学习不能变成过度询问。</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="roadmap" class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Roadmap</span>
+        <h2>阶段推进按风险递增，而不是一步到真实机器人。</h2>
+        <p>先把空间 schema、仿真闭环、评估协议和候选准入做稳定，再进入空间更新、主动策略学习和真实机器人灰度。</p>
+      </div>
+      <div class="timeline clean">
+        <article class="phase"><div><b>0</b><h3>最小空间闭环</h3><p>固定 spatial schema、predicate、skill contract、trace schema；完成核心接口 stub。</p></div><span class="tag">Month 0-2</span></article>
+        <article class="phase"><div><b>1</b><h3>空间模型与验证</h3><p>验证 spatial world snapshot、predicate verifier、hidden spatial failure 和恢复边界。</p></div><span class="tag">Month 2-4</span></article>
+        <article class="phase"><div><b>2</b><h3>主动空间感知</h3><p>训练/评估 inspect、换视角、低风险探测和请求标注策略，同时控制延迟和人工负担。</p></div><span class="tag">Month 4-7</span></article>
+        <article class="phase"><div><b>3</b><h3>空间更新与策略学习</h3><p>把失败 trace 转成候选空间事实、感知器和 active policy，但只在离线与 shadow 中准入。</p></div><span class="tag">Month 7-10</span></article>
+        <article class="phase"><div><b>4</b><h3>受控真实灰度</h3><p>每日任务、失败回流、每周灰度发布、可回滚版本和审计面板。</p></div><span class="tag">Month 10-12</span></article>
+      </div>
+    </section>
+
+    <section id="risk-governance" class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Risk Governance</span>
+        <h2>风险治理要嵌入运行和发布链路。</h2>
+        <p>安全必须贯穿动作前检查、执行中控制、失败后恢复和上线前准入。每个动作、每次恢复、每个候选更新都必须留下可审计证据，并同时衡量安全与可用性。</p>
+      </div>
+      <div class="risk-grid-clear">
+        <article><strong>动作前</strong><span>检查权限、禁区、对象置信度、路径风险、动作可逆性和是否需要用户确认；低置信度先 inspect。</span></article>
+        <article><strong>执行中</strong><span>急停、避障、限速、力控、近人保护和远程接管独立于大模型；硬约束触发时中止技能。</span></article>
+        <article><strong>失败后</strong><span>冻结任务图，记录 failure boundary，优先 rollback、换角度、重试、询问或安全暂停。</span></article>
+        <article><strong>上线前</strong><span>候选更新必须通过旧任务回归、安全集、跨域 shadow、校准和 overblocking 检查，并保留可回滚版本。</span></article>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>详细文档：proposal.md</span>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

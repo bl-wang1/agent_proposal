@@ -1,0 +1,241 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECAOS | 风险</title>
+  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/clarity.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="ECAOS">
+        <span class="mark" aria-hidden="true"></span>
+        <span>ECAOS</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="index.html">总览</a>
+        <a href="architecture.html">系统</a>
+        <a href="runtime.html">运行</a>
+        <a href="method.html" class="active" aria-current="page">实验路线</a>
+        <a href="sources.html">参考</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <main id="top" class="clarity-main">
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">Risk Governance</span>
+        <h1>真实机器人 Agent 的安全不能靠 prompt。</h1>
+        <p>安全层必须独立于大模型，覆盖风险分级、权限确认、禁区、限速、力控、隐私、审计、急停和远程接管。</p>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Safety Case</span>
+        <h2>风险控制嵌入运行链路，而不是事后补丁。</h2>
+        <p>每个动作、每次恢复、每个候选更新都必须留下可审计证据；安全目标不是让系统无限保守，而是在可用性和风险之间形成可度量边界。</p>
+      </div>
+      <div class="risk-grid-clear">
+        <article><strong>动作前</strong><span>检查权限、禁区、对象置信度、路径风险、动作可逆性和是否需要用户确认；低置信度先 inspect，不直接操作。</span></article>
+        <article><strong>执行中</strong><span>急停、避障、限速、力控、近人保护和远程接管独立于大模型；任何硬约束触发都会中止技能。</span></article>
+        <article><strong>失败后</strong><span>冻结任务图，记录 failure boundary，优先选择 rollback、换角度、重试、询问或安全暂停，而不是继续猜测。</span></article>
+        <article><strong>上线前</strong><span>候选更新必须通过旧任务回归、安全集、跨域 shadow、校准和 overblocking 检查，且保留可回滚版本。</span></article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="pseudo-grid">
+        <div class="pseudo-card">
+          <h2>Safety gate</h2>
+          <p>安全门控不是 planner 的一部分。planner 只能提出候选动作，gate 决定是否允许、询问、检查、回滚或拒绝。</p>
+<pre class="pseudo-code"><code>def safety_gate(step, world, policy, user_state):
+    evidence = collect_evidence(step, world)
+
+    if emergency_stop_pressed() or controller_fault():
+        return Block("hard stop", action=hold_safe_pose())
+
+    if violates_hard_constraint(step, policy.no_go_zones):
+        return Block("no-go zone", action=replan())
+
+    if near_human(step.path) or exceeds_force_limit(step):
+        return AskOrBlock("human proximity", action=slow_or_stop())
+
+    if evidence.object_confidence &lt; policy.object_threshold:
+        return Inspect("ambiguous object")
+
+    if step.is_irreversible or step.operates_device:
+        return Ask("permission required")
+
+    if world.fact_is_stale(step.required_facts):
+        return Inspect("stale world model")
+
+    return Allow(evidence=evidence)</code></pre>
+        </div>
+        <aside class="pseudo-note">
+          <div><strong>硬约束优先</strong><span>禁区、急停、碰撞保护和控制器故障不交给语言模型裁决。</span></div>
+          <div><strong>证据驱动</strong><span>每次 allow/block/ask/inspect 都记录证据，用于审计和后续 overblocking 分析。</span></div>
+          <div><strong>可用性纳入治理</strong><span>安全层不仅统计违规，也统计本可安全完成却被阻断的任务，避免系统退化成不可用。</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Data Governance</span>
+        <h2>真实轨迹先被治理，再被学习。</h2>
+        <p>持续学习的关键不是“多收数据”，而是把每条 trace 变成有用途边界、脱敏状态、质量标签和准入结论的训练资产；否则系统会把隐私、偏见、错误标签和旧能力退化一起放大。</p>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>用途边界</strong>
+          <span>任务开始前声明 trace 用途：调试、评估、训练或审计。未获得训练授权的片段只能用于本次回放和事故复盘。</span>
+        </article>
+        <article>
+          <strong>最小采集</strong>
+          <span>默认保留结构化状态、技能输入输出、验证结果和失败标签；原始视频、音频和个人标识只在必要时短期保存。</span>
+        </article>
+        <article>
+          <strong>脱敏入库</strong>
+          <span>人脸、姓名、屏幕内容、门牌、私人物品和敏感语音在进入训练池前必须被遮挡、摘要化或剔除。</span>
+        </article>
+        <article>
+          <strong>可撤回与留存</strong>
+          <span>每个训练样本保留来源、版本、权限和保留期限；用户撤回授权时，后续候选 bundle 必须排除对应片段。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="pseudo-grid">
+        <div class="pseudo-card">
+          <h2>Trace admission</h2>
+          <p>数据治理层决定 trace 能否进入训练池。它和模型训练解耦，保证持续学习不会绕过隐私、安全和质量门槛。</p>
+<pre class="pseudo-code"><code>def admit_trace_for_learning(trace, data_policy):
+    card = build_dataset_card(trace)
+
+    if trace.user_consent.training != True:
+        return KeepForAuditOnly(card, reason="no training consent")
+
+    if contains_sensitive_scene(trace.raw_streams):
+        trace = redact(trace, targets=[
+            "face", "voice", "screen", "badge", "private_object"
+        ])
+        card.redaction_status = "redacted"
+
+    if trace.has_unresolved_safety_event():
+        return Quarantine(card, reason="unresolved safety event")
+
+    if trace.failure_label.confidence &lt; data_policy.label_threshold:
+        return SendToHumanAudit(card, reason="uncertain label")
+
+    if duplicates_known_failure(trace) and not improves_coverage(trace):
+        return Reject(card, reason="low marginal value")
+
+    if would_unbalance_replay_buffer(trace):
+        return Defer(card, reason="replay balance")
+
+    return Admit(
+        trace=strip_raw_streams(trace),
+        dataset_card=card,
+        retention=data_policy.retention_days,
+    )</code></pre>
+        </div>
+        <aside class="pseudo-note">
+          <div><strong>先授权后训练</strong><span>训练用途和审计用途分离，避免把临时回放数据自动混入模型更新。</span></div>
+          <div><strong>先脱敏后入池</strong><span>原始多模态流不是默认训练资产；优先使用结构化状态、谓词结果和失败标签。</span></div>
+          <div><strong>先质量后增量</strong><span>低置信度标签、重复失败和 replay 失衡会被隔离，避免数据飞轮变成噪声飞轮。</span></div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Policy Governance</span>
+        <h2>Agentic RL 候选必须证明自己没有学会钻空子。</h2>
+        <p>RL 不能只看最终成功率。候选策略上线前必须证明它没有规避 verifier、滥用 ask-human、通过过度保守制造“表面安全”，也没有把风险转嫁给用户或低层控制器。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>失配模式</span><span>表面收益</span><span>真实风险</span><span>拦截证据</span></div>
+        <div>
+          <span>Verifier gaming</span>
+          <span>策略频繁 inspect 或选择容易通过的谓词。</span>
+          <span>任务没有真实推进，但 subgoal 指标被刷高。</span>
+          <span>检查 inspect 频率、world diff、final SR 和 hidden failure。</span>
+        </div>
+        <div>
+          <span>Ask-human overuse</span>
+          <span>恢复率看似提高。</span>
+          <span>系统把困难决策转嫁给用户，自主能力没有提升。</span>
+          <span>区分 autonomous recovery 与 human-assisted recovery。</span>
+        </div>
+        <div>
+          <span>Overblocking</span>
+          <span>unsafe event 下降。</span>
+          <span>系统过度拒绝本可安全完成的任务，实际不可用。</span>
+          <span>报告 overblocking、blocked-safe-task 和用户取消率。</span>
+        </div>
+        <div>
+          <span>Risk transfer</span>
+          <span>高层策略成功率提高。</span>
+          <span>把风险推给低层控制器、人工接管或环境约束。</span>
+          <span>审计 gate decision、near miss、controller fault 和 takeover 原因。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="pseudo-grid">
+        <div class="pseudo-card">
+          <h2>Policy audit</h2>
+          <p>策略准入必须同时检查收益、行为分布和风险转移，而不是只看成功率。</p>
+<pre class="pseudo-code"><code>def audit_policy_candidate(candidate, report, baseline):
+    if report.unsafe_events &gt; 0:
+        return Reject("unsafe event")
+
+    if report.hidden_failure_rate &gt; baseline.hidden_failure_rate:
+        return Reject("verifier gaming suspected")
+
+    if report.inspect_rate &gt; baseline.inspect_rate + threshold.inspect_delta:
+        return Review("excessive inspection")
+
+    if report.human_takeover_rate &gt; baseline.human_takeover_rate:
+        if not report.autonomous_recovery_rate_improved:
+            return Reject("recovery shifted to human")
+
+    if report.overblocking_rate &gt; baseline.overblocking_rate + threshold.overblock_delta:
+        return Reject("too conservative")
+
+    if report.controller_fault_rate &gt; baseline.controller_fault_rate:
+        return Reject("risk transferred to controller")
+
+    if not report.passes_holdout_scenarios:
+        return Reject("poor generalization")
+
+    return PromoteToShadow(report.audit_trail)</code></pre>
+        </div>
+        <aside class="pseudo-note">
+          <div><strong>成功率不是充分条件</strong><span>候选策略即使提升 success rate，也必须同时通过 hidden failure、overblocking、takeover 和 controller fault 检查。</span></div>
+          <div><strong>行为分布要稳定</strong><span>inspect、ask-human、abort、retry 的分布突变必须进入人工审计，避免策略靠投机路径得分。</span></div>
+          <div><strong>holdout 必须保留</strong><span>策略准入需要未见场景、未见物体和旧任务回归，避免只适配最近失败样本。</span></div>
+        </aside>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>详细文档：proposal.md</span>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

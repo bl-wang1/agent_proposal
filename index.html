@@ -1,0 +1,271 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECAOS | 总览</title>
+  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/clarity.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="ECAOS">
+        <span class="mark" aria-hidden="true"></span>
+        <span>ECAOS</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="index.html" class="active" aria-current="page">总览</a>
+        <a href="architecture.html">系统</a>
+        <a href="runtime.html">运行</a>
+        <a href="method.html">实验路线</a>
+        <a href="sources.html">参考</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <main id="top" class="clarity-main">
+    <section class="clarity-hero">
+      <div class="wrap hero-grid">
+        <div class="hero-copy">
+          <div class="eyebrow">Embodied Spatial Agent Framework</div>
+          <h1>做一个能理解、感知并主动更新空间的机器人 Agent 框架。</h1>
+          <p class="hero-lead">ECAOS 把真实环境编码为空间世界模型，让 Agent 用拓扑、对象关系、可达性、遮挡、affordance 和置信度来规划、执行、验证和主动补充感知。</p>
+          <div class="hero-actions">
+            <a class="button" href="runtime.html">看系统如何运行</a>
+            <a class="button secondary" href="task.html">看任务与验收</a>
+            <a class="button secondary" href="proposal.md">Markdown 详细版</a>
+          </div>
+        </div>
+        <aside class="answer-card">
+          <span class="tag">一句话目标</span>
+          <h2>让机器人从“看见物体”走向“理解可行动的空间”。</h2>
+          <div class="answer-list">
+            <div><strong>研究对象</strong><span>面向物理世界长程任务的机器人 Agent。</span></div>
+            <div><strong>核心机制</strong><span>空间事实图、主动感知策略、空间验证器、技能契约。</span></div>
+            <div><strong>验收方式</strong><span>空间 grounding、关系判断、可达性预测、遮挡处理和长程任务成功率提升。</span></div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Architecture Head Figure</span>
+        <h2>ECAOS 的整体架构由四条信息流组成。</h2>
+        <p>Observe 负责把目标和传感器观测写成空间事实；Decide 基于 SpatialFact Graph 选择主动感知或规划；Execute 通过 Skill Contract 调度物理技能；Verify / Learn 把验证结果和 trace 作为候选更新回写。</p>
+      </div>
+      <div class="arch-figure" aria-label="ECAOS 整体架构图">
+        <div class="arch-swimlanes">
+          <div class="arch-lane">
+            <div class="arch-lane-label">Observe</div>
+            <article class="arch-card arch-source">
+              <strong>Task + Sensors</strong>
+              <span>用户目标、RGB-D/video、机器人位姿、地图、工具反馈、人类标注。</span>
+            </article>
+            <div class="arch-arrow" aria-hidden="true"></div>
+            <article class="arch-card arch-perception">
+              <strong>Spatial Perception</strong>
+              <span>对象、区域、局部几何、遮挡、可达性候选和 affordance 候选。</span>
+            </article>
+            <div class="arch-arrow" aria-hidden="true"></div>
+            <article class="arch-card arch-state primary">
+              <strong>SpatialFact Graph</strong>
+              <span>visible、reachable、on/inside/near、confidence、evidence、expires_at、risk_relevance。</span>
+            </article>
+          </div>
+
+          <div class="arch-lane">
+            <div class="arch-lane-label">Decide</div>
+            <article class="arch-card arch-state compact">
+              <strong>SpatialFact Graph</strong>
+              <span>planner 和主动感知策略的共享状态。</span>
+            </article>
+            <div class="arch-arrow" aria-hidden="true"></div>
+            <article class="arch-card arch-active">
+              <strong>Active Perception Policy</strong>
+              <span>低置信、冲突、遮挡、可达性未知或高风险时触发 inspect、换视角、probe 或 ask_human。</span>
+            </article>
+            <div class="arch-arrow" aria-hidden="true"></div>
+            <article class="arch-card arch-planner">
+              <strong>Spatial Planner</strong>
+              <span>把目标拆成带 precondition、effect 和 verifier 的空间任务图。</span>
+            </article>
+          </div>
+
+          <div class="arch-lane">
+            <div class="arch-lane-label">Execute</div>
+            <article class="arch-card arch-planner compact">
+              <strong>Spatial Task Graph</strong>
+              <span>子目标、空间谓词、风险等级和恢复边界。</span>
+            </article>
+            <div class="arch-arrow" aria-hidden="true"></div>
+            <article class="arch-card arch-skill">
+              <strong>Skill Contract Runtime</strong>
+              <span>按 Contract 调度导航、抓取、放置、开门、VLA policy 或脚本 controller。</span>
+            </article>
+            <div class="arch-arrow" aria-hidden="true"></div>
+            <article class="arch-card arch-world">
+              <strong>Physical World</strong>
+              <span>机器人动作改变真实空间；动作结果重新进入观测和验证。</span>
+            </article>
+          </div>
+
+          <div class="arch-lane">
+            <div class="arch-lane-label">Verify / Learn</div>
+            <article class="arch-card arch-world compact">
+              <strong>Physical Result</strong>
+              <span>真实动作结果、传感器回读和执行状态。</span>
+            </article>
+            <div class="arch-arrow loop" aria-hidden="true"></div>
+            <article class="arch-card arch-verify">
+              <strong>Spatial Verifier</strong>
+              <span>检查 visible / reachable / on / inside / near 是否成立，发现 hidden spatial failure。</span>
+            </article>
+            <div class="arch-arrow loop" aria-hidden="true"></div>
+            <article class="arch-card arch-trace">
+              <strong>Trace + Candidate Update</strong>
+              <span>记录事实、主动感知、技能调用、门控决策和验证结果；只生成候选更新。</span>
+            </article>
+          </div>
+
+          <div class="arch-return">
+            <span>candidate SpatialFacts / perception updates / active policy samples</span>
+            <strong>通过 replay、shadow evaluation 和准入后，回写 SpatialFact Graph。</strong>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Executive Overview</span>
+        <h2>研究范围、技术路线与验证协议。</h2>
+        <p>研究目标是把空间信息编码、主动空间感知、任务图规划和空间谓词验证统一为机器人 Agent 框架。</p>
+      </div>
+      <div class="overview-dashboard">
+        <article class="overview-span">
+          <strong>Scope</strong>
+          <h3>空间世界模型驱动的移动操作 Agent 框架</h3>
+          <p>服务于可建模、可验证、可主动感知的物理任务；环境差异通过空间编码、感知适配器和技能契约吸收。</p>
+        </article>
+        <article>
+          <strong>Problem</strong>
+          <span>长程失败主要来自空间关系误判、遮挡未处理、可达性估计错误、世界状态过期和技能前提失配。</span>
+        </article>
+        <article>
+          <strong>Approach</strong>
+          <span>以空间事实图、主动感知策略、空间验证器和技能契约构成闭环；trace（执行证据链）用于更新空间事实和感知器。</span>
+        </article>
+        <article>
+          <strong>Benchmark</strong>
+          <span>构建 10-20 个长程任务；每个任务包含 3-8 个子目标，并提供初始状态、成功判据、失败标签和跨域测试集。</span>
+        </article>
+        <article>
+          <strong>Metrics</strong>
+          <span>评估空间 grounding、关系判断、可达性预测、stale memory 检测、主动感知收益、长程成功率和安全事件。</span>
+        </article>
+        <article>
+          <strong>Safety</strong>
+          <span>高风险动作需经显式确认；急停、避障、限速、力控和禁区约束独立于大模型决策链路。</span>
+        </article>
+        <article>
+          <strong>Active Learning</strong>
+          <span>当空间事实低置信度、互相冲突或遮挡严重时，系统主动选择换视角、inspect、低风险探测或请求标注。</span>
+        </article>
+        <article class="overview-full">
+          <strong>Generalization</strong>
+          <span>框架泛化的是空间 schema、谓词、主动感知策略、技能契约和验证逻辑；传感器、地图和控制器按场景替换。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Four Mechanisms</span>
+        <h2>最小研究对象收敛为四个机制。</h2>
+        <p>第一版不追求全功能机器人平台，而是证明空间事实如何被编码、主动补齐、验证并接入技能执行。</p>
+      </div>
+      <div class="definition-grid">
+        <article><strong>SpatialFact Graph</strong><span>把空间写成可查询事实：subject、predicate、object、frame、confidence、evidence、expires_at、risk_relevance。最小谓词先做 visible、reachable、relation(on/inside/near)。</span></article>
+        <article><strong>Active Perception Policy</strong><span>当事实低置信度、互相冲突、被遮挡、可达性未知或影响高风险动作时，选择 inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span></article>
+        <article><strong>Spatial Verifier</strong><span>不相信裸 skill success，而是检查 visible、reachable、on/inside/near、path_clear、object_moved 等空间 effect 是否真的成立。</span></article>
+        <article><strong>Skill Contract</strong><span>每个技能声明 precondition、effect、verifier、rollback、risk 和 failure code，例如 `place(cup, sink)` 需要 cup in gripper、sink reachable，并产出 inside(cup, sink)。</span></article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Research Questions</span>
+        <h2>研究问题也压缩到四个可验证问题。</h2>
+      </div>
+      <div class="hypothesis-grid">
+        <article>
+          <strong>Fact</strong>
+          <span>SpatialFact Graph 能否比文本记忆、2D map 或静态 3D semantic memory 更准确地表达 visible、reachable 和 on/inside/near。</span>
+        </article>
+        <article>
+          <strong>Sense</strong>
+          <span>Active Perception Policy 能否用更少 inspect、换视角、低风险探测和人工标注降低空间错误。</span>
+        </article>
+        <article>
+          <strong>Verify</strong>
+          <span>Spatial Verifier 能否比技能返回值更早发现 hidden spatial failure。</span>
+        </article>
+        <article>
+          <strong>Act</strong>
+          <span>Skill Contract 能否把不同导航、操作和 VLA 技能统一接入 precondition/effect/verifier，而不污染任务图。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">System Map</span>
+        <h2>系统由六层组成，但运行主线只有一条。</h2>
+      </div>
+      <div class="overview-map">
+        <div><strong>人机交互</strong><span>目标输入、任务卡、确认、打断、接管。</span></div>
+        <div><strong>世界模型</strong><span>地图、物体、人、关系、时间、置信度。</span></div>
+        <div><strong>Agent 推理</strong><span>目标理解、任务图、技能选择、失败解释。</span></div>
+        <div><strong>技能执行</strong><span>感知、导航、操作、沟通、恢复。</span></div>
+        <div><strong>安全治理</strong><span>权限、禁区、限速、力控、隐私、审计。</span></div>
+        <div><strong>评估运维</strong><span>回放、指标、失败分类、灰度发布。</span></div>
+      </div>
+      <div class="flow-strip">
+        <div><strong>1. Goal</strong><span>用户给任务，系统展示计划和风险。</span></div>
+        <div><strong>2. Model</strong><span>世界模型提供当前假设。</span></div>
+        <div><strong>3. Act</strong><span>runtime 调度带契约的技能。</span></div>
+        <div><strong>4. Verify</strong><span>空间谓词验证器判断 expected relation/effect 是否达成。</span></div>
+        <div><strong>5. Update</strong><span>trace 形成空间证据链，用于更新 SpatialFact、感知器和主动学习队列。</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Read Next</span>
+        <h2>从系统到验证，逐层展开。</h2>
+      </div>
+      <div class="route-grid">
+        <a href="architecture.html"><strong>系统</strong><span>任务边界、交互协议、控制架构和接口契约。</span></a>
+        <a href="runtime.html"><strong>运行</strong><span>系统框架图和具体 episode 演示。</span></a>
+        <a href="method.html"><strong>实验路线</strong><span>空间编码、主动感知、baseline、指标、阶段路线和风险治理。</span></a>
+        <a href="method.html#risk-governance"><strong>风险治理</strong><span>物理安全、数据治理、候选发布和策略审计。</span></a>
+        <a href="sources.html"><strong>参考</strong><span>机器人基础模型、Agent 框架和内部思考来源。</span></a>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>详细文档：proposal.md</span>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>

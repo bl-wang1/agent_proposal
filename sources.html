@@ -1,0 +1,109 @@
+﻿<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>ECAOS | 参考</title>
+  <meta name="description" content="ECAOS：面向长程具身任务的空间感知机器人 Agent 框架 proposal" />
+  <link rel="stylesheet" href="assets/styles.css" />
+  <link rel="stylesheet" href="assets/clarity.css" />
+</head>
+<body>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <a class="brand" href="index.html" aria-label="ECAOS">
+        <span class="mark" aria-hidden="true"></span>
+        <span>ECAOS</span>
+      </a>
+      <nav aria-label="主导航">
+        <a href="index.html">总览</a>
+        <a href="architecture.html">系统</a>
+        <a href="runtime.html">运行</a>
+        <a href="method.html">实验路线</a>
+        <a href="sources.html" class="active" aria-current="page">参考</a>
+      </nav>
+    </div>
+    <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+  </header>
+
+  <main id="top" class="clarity-main">
+    <section class="page-hero">
+      <div class="wrap">
+        <span class="eyebrow">References</span>
+        <h1>关键参考来源。</h1>
+        <p>来源分为机器人基础模型、空间记忆、主动学习、Agent 框架、具身基准、安全治理和内部框架思考。</p>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Evidence Map</span>
+        <h2>参考资料支撑研究假设与实现选择。</h2>
+        <p>这些来源被组织成三类证据：机器人基础模型说明低层能力正在成熟，空间记忆和具身基准说明长程任务需要显式空间状态，Agent 框架说明运行时工程模式可复用；同时也解释为什么单纯微调 VLA 或迁移数字 Agent 框架不足以覆盖本 proposal 的目标。</p>
+      </div>
+      <div class="test-matrix source-matrix">
+        <div class="matrix-head"><span>研究命题</span><span>支撑来源</span><span>被 ECAOS 吸收的设计</span><span>仍未解决的空白</span></div>
+        <div>
+          <span>H1 · Agent 需要显式空间世界模型</span>
+          <span>HoloAgent-0、3DLLM-Mem、Habitat 3.0、RoboCasa、EmbodiedBench</span>
+          <span>把拓扑、对象、局部几何、可达性、遮挡和 affordance 转化为 Agent 可查询状态。</span>
+          <span>多数方法仍缺少空间事实与任务图、技能 precondition、空间 verifier 的稳定接口。</span>
+        </div>
+        <div>
+          <span>H2 · 空间不确定性需要主动感知</span>
+          <span>SayCan、Code as Policies、具身主动感知/next-best-view 思路、RoboCasa、Habitat 3.0</span>
+          <span>在低置信度、遮挡、关系冲突和可达性未知时触发 inspect、换视角、探测或请求标注。</span>
+          <span>现有机器人 Agent 往往被动使用观测，缺少把信息增益、动作成本和安全风险合在一起的主动策略。</span>
+        </div>
+        <div>
+          <span>H3 · 空间更新需要受控准入</span>
+          <span>Voyager、Agent Lightning、持续 RL、Datasheets for Datasets、Data Cards、OWASP LLM 风险</span>
+          <span>把 trace、失败归因、主动标注、candidate memory/perception bundle、shadow evaluation 和 safety gate 作为空间更新准入链路。</span>
+          <span>真实机器人不能把所有新观测直接写入世界模型；必须评估错误标签、过期事实、安全、过度询问和旧空间回归。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Primary Sources</span>
+        <h2>关键参考来源。</h2>
+      </div>
+      <ul class="source-grid reveal">
+        <li><a href="https://arxiv.org/abs/2305.16291">Voyager</a>：自动课程、技能库、迭代反馈。</li>
+        <li><a href="https://say-can.github.io/">SayCan</a>：用 affordance grounding 约束语言模型计划。</li>
+        <li><a href="https://code-as-policies.github.io/">Code as Policies</a>：语言模型生成可执行机器人策略程序。</li>
+        <li><a href="https://robotics-transformer-x.github.io/">Open X-Embodiment</a>：跨机器人真实轨迹和 RT-X。</li>
+        <li><a href="https://octo-models.github.io/">Octo</a>：开源通用机器人策略和跨本体适配。</li>
+        <li><a href="https://arxiv.org/abs/2406.09246">OpenVLA</a>：开源 VLA 与微调代码。</li>
+        <li><a href="https://arxiv.org/abs/2403.12945">DROID</a>：多场景真实机器人操作数据，用于研究环境与任务多样性。</li>
+        <li><a href="https://proceedings.mlr.press/v229/walke23a.html">BridgeData V2</a>：跨环境机器人操作数据集，支持语言和目标条件泛化研究。</li>
+        <li><a href="https://embodiedbench.github.io/">EmbodiedBench</a>：多模态具身 Agent 长程任务评估。</li>
+        <li><a href="https://aihabitat.org/habitat3/">Habitat 3.0</a>：人机协作、导航和重排仿真。</li>
+        <li><a href="https://robocasa.ai/">RoboCasa</a>：家居厨房操作与 generalist robot benchmark。</li>
+        <li><a href="https://arxiv.org/abs/2508.03680">Agent Lightning</a>：把 Agent 轨迹转为 RL 训练接口。</li>
+        <li><a href="https://arxiv.org/abs/1803.09010">Datasheets for Datasets</a>：记录数据来源、组成、采集过程、用途和限制。</li>
+        <li><a href="https://arxiv.org/abs/2204.01075">Data Cards</a>：面向责任 AI 的结构化数据文档与生命周期透明度。</li>
+        <li><a href="https://github.com/huggingface/lerobot">LeRobot</a>：机器人数据采集、训练、控制和评估工具。</li>
+        <li><a href="https://developer.nvidia.com/isaac/lab">Isaac Lab</a>：GPU 加速机器人学习仿真与策略训练框架。</li>
+        <li><a href="https://design.ros2.org/articles/node_lifecycle.html">ROS 2 Managed Nodes</a>：机器人组件生命周期管理和在线替换机制。</li>
+        <li><a href="https://docs.langchain.com/oss/python/langgraph/overview">LangGraph</a>：durable execution、memory、human-in-the-loop。</li>
+        <li><a href="https://learn.microsoft.com/en-us/agent-framework/overview/">Microsoft Agent Framework</a>：多 Agent workflow、状态和 telemetry。</li>
+        <li><a href="https://zheruiqiu.github.io/omega/">OMEGA</a>：生命周期、契约和可观测性表达方式。</li>
+        <li><a href="https://aicarrier.feishu.cn/docx/ZexVdJVqHoIAWDxwJWlcvYFNnQb">物理世界机器人 Agent 框架</a>：interaction-first、world-model-first、safety-first。</li>
+        <li><a href="https://genai.owasp.org/llmrisk/llm01-prompt-injection/">OWASP LLM01</a>：prompt injection 风险。</li>
+      </ul>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <span>ECAOS Research Proposal · 2026-06-28</span>
+      <span>详细文档：proposal.md</span>
+    </div>
+  </footer>
+
+  <script src="assets/app.js"></script>
+</body>
+</html>
