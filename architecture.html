@@ -135,6 +135,47 @@
 
     <section class="wrap section-compact">
       <div class="section-title">
+        <span class="eyebrow">Observe Pipeline</span>
+        <h2>Observe 把原始观测变成可决策的空间事实。</h2>
+        <p>这一层不只是建图或写日志，而是把传感器输入、技能反馈和人工标注规范化为带证据、置信度、过期时间和风险语义的 SpatialFact。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>步骤</span><span>输入/动作</span><span>输出</span><span>为什么重要</span></div>
+        <div>
+          <span>1. Raw observation</span>
+          <span>RGB-D/video、机器人位姿、地图、技能反馈、历史 memory 和 human label。</span>
+          <span>可追溯的 observation packet。</span>
+          <span>所有后续空间事实都能回到具体证据源。</span>
+        </div>
+        <div>
+          <span>2. Spatial candidates</span>
+          <span>抽取对象、区域、局部几何、遮挡、可达性和 affordance 候选。</span>
+          <span>visible、reachable、on/inside/near、occluded_by、placeable_on 候选。</span>
+          <span>把“看见什么”转成 planner 和 verifier 能使用的空间谓词候选。</span>
+        </div>
+        <div>
+          <span>3. SpatialFact write</span>
+          <span>为每个候选写入 subject、predicate、object、frame、confidence、evidence、source_viewpoint 和 expires_at。</span>
+          <span>带证据和生命周期的 SpatialFact。</span>
+          <span>空间状态不再是静态 3D memory，而是可查询、可过期、可复核的 Agent state。</span>
+        </div>
+        <div>
+          <span>4. Conflict / expiry / risk</span>
+          <span>新旧事实冲突时写入 conflict_set；过期或低置信事实降权；高风险相关事实进入 gate。</span>
+          <span>inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span>
+          <span>错误记忆不会被直接覆盖或直接驱动高风险动作。</span>
+        </div>
+        <div>
+          <span>5. Decide / Verify handoff</span>
+          <span>Planner 读取 SpatialFact Graph；verifier 用独立证据检查 expected effect。</span>
+          <span>下一步计划、主动感知动作或 hidden spatial failure 标记。</span>
+          <span>Observe 的产物直接影响执行选择和空间验证，而不是只作为背景上下文。</span>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
         <span class="eyebrow">Core Contracts</span>
         <h2>系统靠契约连接，而不是靠 prompt 默契。</h2>
       </div>
@@ -227,7 +268,7 @@
       <div class="contract-grid">
         <article><strong>SkillContract</strong><span>intent、precondition、effect、verifier、rollback、risk、failure code。</span></article>
         <article><strong>ImplementationAdapter</strong><span>embodiment、controller、safety limits、contract tests。</span></article>
-        <article><strong>SpatialFact</strong><span>subject、predicate、object、frame、confidence、evidence、last_verified_at、expires_at、risk_relevance。</span></article>
+        <article><strong>SpatialFact</strong><span>subject、predicate、object、frame、confidence、evidence、source_viewpoint、conflict_set、last_verified_at、expires_at、risk_relevance。</span></article>
         <article><strong>ActivePerceptionAction</strong><span>trigger、target、candidate_pose、expected_information_gain、cost、risk、result_label。</span></article>
         <article><strong>TraceEvent</strong><span>step、world diff、skill I/O、predicate result、failure boundary、human decision。</span></article>
       </div>
