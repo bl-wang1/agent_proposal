@@ -2310,9 +2310,9 @@ body {
 .branch-label {
   position: absolute;
   z-index: 2;
-  left: 300px;
-  top: 330px;
-  max-width: 190px;
+  left: 120px;
+  top: 336px;
+  max-width: 160px;
   border: 1px solid rgba(91, 75, 183, 0.42);
   background: rgba(255, 255, 255, 0.96);
   color: var(--muted);
@@ -2520,10 +2520,10 @@ body {
 }
 
 .runtime-cinema .branch-verify-active {
-  left: 106px;
-  top: 320px;
-  width: 356px;
-  height: 72px;
+  left: 116px;
+  top: 340px;
+  width: 350px;
+  height: 40px;
 }
 
 .node-detail {
