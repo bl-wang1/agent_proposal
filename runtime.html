@@ -45,8 +45,17 @@
       <div class="flow-board episode-board reveal sequence-visual">
         <div class="arch-figure system-cinema runtime-cinema" aria-label="杯子入水槽任务的端到端示例动画">
           <div class="cinema-stage">
-            <div class="cinema-rail rail-main" aria-hidden="true"></div>
-            <div class="cinema-rail rail-return" aria-hidden="true"></div>
+            <div class="episode-flow-lines" aria-hidden="true">
+              <i class="flow-segment seg-1"></i>
+              <i class="flow-segment seg-2"></i>
+              <i class="flow-segment seg-3"></i>
+              <i class="flow-segment seg-4"></i>
+              <i class="flow-segment seg-5"></i>
+              <i class="flow-segment seg-6"></i>
+              <i class="flow-segment seg-7"></i>
+              <i class="flow-branch branch-verify-active"></i>
+              <span class="branch-label">7 -> 4：Verify 失败则补证据后重试</span>
+            </div>
             <i class="cinema-token token-task" aria-hidden="true"></i>
             <i class="cinema-token token-fact" aria-hidden="true"></i>
             <i class="cinema-token token-action" aria-hidden="true"></i>
@@ -141,6 +150,7 @@
             <div><strong>SpatialFact -> Active Sense</strong><span>低置信、冲突、遮挡或高风险前置条件触发 inspect、换视角、probe 或 ask_human。</span></div>
             <div><strong>Active Sense -> Planner</strong><span>补证据后再生成任务图；Planner 输出的是候选节点，不直接拥有执行权。</span></div>
             <div><strong>Planner -> Verify -> Trace</strong><span>技能执行后检查空间谓词 effect；成功、失败、恢复和人工选择都写入 trace。</span></div>
+            <div><strong>Verify -> Active Sense</strong><span>如果 effect 未成立，例如 inside(cup, sink) 失败，回到主动感知补视角或探测，再 replan/retry。</span></div>
           </div>
         </aside>
       </div>

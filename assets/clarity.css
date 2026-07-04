@@ -2246,6 +2246,81 @@ body {
   border-color: rgba(91, 75, 183, 0.35);
 }
 
+.episode-flow-lines {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+}
+
+.flow-segment,
+.flow-branch {
+  position: absolute;
+  display: block;
+  background: rgba(15, 118, 110, 0.78);
+}
+
+.flow-segment::after,
+.flow-branch::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 7px solid transparent;
+}
+
+.flow-segment.horizontal::after,
+.seg-1::after,
+.seg-2::after,
+.seg-7::after {
+  right: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-left-color: rgba(15, 118, 110, 0.9);
+}
+
+.seg-5::after,
+.seg-4::after {
+  left: -12px;
+  top: 50%;
+  transform: translateY(-50%);
+  border-right-color: rgba(15, 118, 110, 0.9);
+}
+
+.seg-3::after,
+.seg-6::after {
+  left: 50%;
+  bottom: -12px;
+  transform: translateX(-50%);
+  border-top-color: rgba(15, 118, 110, 0.9);
+}
+
+.branch-verify-active {
+  border: 2px solid rgba(91, 75, 183, 0.72);
+  border-right: 0;
+  background: transparent;
+}
+
+.branch-verify-active::after {
+  right: -8px;
+  top: -8px;
+  border-left-color: rgba(91, 75, 183, 0.92);
+}
+
+.branch-label {
+  position: absolute;
+  z-index: 2;
+  left: 300px;
+  top: 330px;
+  max-width: 190px;
+  border: 1px solid rgba(91, 75, 183, 0.42);
+  background: rgba(255, 255, 255, 0.96);
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.35;
+  padding: 7px 9px;
+}
+
 .cinema-token {
   position: absolute;
   z-index: 7;
@@ -2393,6 +2468,62 @@ body {
   top: 430px;
   width: 430px;
   height: 92px;
+}
+
+.runtime-cinema .seg-1 {
+  left: 356px;
+  top: 99px;
+  width: 42px;
+  height: 3px;
+}
+
+.runtime-cinema .seg-2 {
+  left: 576px;
+  top: 99px;
+  width: 42px;
+  height: 3px;
+}
+
+.runtime-cinema .seg-3 {
+  left: 570px;
+  top: 144px;
+  width: 3px;
+  height: 60px;
+}
+
+.runtime-cinema .seg-4 {
+  left: 424px;
+  top: 263px;
+  width: 42px;
+  height: 3px;
+}
+
+.runtime-cinema .seg-5 {
+  left: 204px;
+  top: 263px;
+  width: 42px;
+  height: 3px;
+}
+
+.runtime-cinema .seg-6 {
+  left: 114px;
+  top: 308px;
+  width: 3px;
+  height: 68px;
+}
+
+.runtime-cinema .seg-7 {
+  left: 204px;
+  top: 435px;
+  width: 42px;
+  height: 3px;
+}
+
+.runtime-cinema .branch-verify-active {
+  left: 106px;
+  top: 320px;
+  width: 356px;
+  height: 72px;
 }
 
 .node-detail {
@@ -2878,7 +3009,8 @@ body {
   }
 
   .cinema-rail,
-  .cinema-token {
+  .cinema-token,
+  .episode-flow-lines {
     display: none;
   }
 
