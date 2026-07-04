@@ -32,7 +32,7 @@
       <div class="wrap">
         <span class="eyebrow">Framework</span>
         <h1>主动空间感知的 Agent 框架</h1>
-        <p>这一页只说明系统框架：目标、观察、空间事实状态、任务图、技能执行、谓词验证和 trace 如何通过稳定接口连接。</p>
+        <p>这一页只说明系统框架：主动不是“多看一眼”，而是在不确定、冲突、遮挡或风险触发时，先选择观察动作补证据，再规划、执行和验证。</p>
       </div>
     </section>
 
@@ -40,30 +40,30 @@
       <div class="section-title">
         <span class="eyebrow">System Framework</span>
         <h2>系统框架：核心模块与信息流</h2>
-        <p>框架由空间状态层、规划编排层、执行验证层组成；Contract 固定动作语义，Trace 串起运行证据，Gate Policy 控制风险动作。</p>
+        <p>框架由空间状态层、主动感知层、规划执行验证层组成；Contract 固定动作语义，Trace 串起运行证据，Gate Policy 控制风险动作。</p>
       </div>
       <div class="definition-grid three-up">
         <article><strong>空间状态层</strong><span>把 RGB-D、地图、技能反馈和人工标注写成 SpatialFact Graph，保留 confidence、evidence、expires_at 和 risk_relevance。</span></article>
-        <article><strong>规划编排层</strong><span>Planner 读取目标、约束和空间状态，输出带 precondition、expected effect、verifier 和 fallback 的可验证任务图。</span></article>
-        <article><strong>执行验证层</strong><span>Gate Policy 先决定 allow、ask、inspect、block 或 rollback；技能执行后由空间谓词 verifier 判断 effect 是否成立，并写入 trace。</span></article>
+        <article><strong>主动感知层</strong><span>监测低置信、遮挡、关系冲突和高风险前置条件，选择 change_viewpoint、inspect、probe 或 ask_human 补足证据。</span></article>
+        <article><strong>规划执行验证层</strong><span>Planner 产出可验证任务图；Gate 决定是否执行；技能执行后由空间谓词 verifier 判断 effect 是否成立。</span></article>
       </div>
       <div class="visual-shell process-visual sequence-visual">
         <div class="process-map" aria-label="Spatial Agent 系统模块与信息流">
           <div class="process-line" aria-hidden="true"></div>
           <div class="process-step step-1"><b>01</b><strong>Task Card</strong><span>goal, object, risk</span><em>用户确认的是任务卡</em></div>
-          <div class="process-step step-2"><b>02</b><strong>Spatial Snapshot</strong><span>facts, confidence</span><em>低置信度先 inspect</em></div>
-          <div class="process-step step-3"><b>03</b><strong>Task Graph</strong><span>precondition, effect</span><em>计划只是候选</em></div>
-          <div class="process-step step-4"><b>04</b><strong>Gate + Skill</strong><span>allow / ask / block</span><em>动作前独立门控</em></div>
+          <div class="process-step step-2"><b>02</b><strong>Spatial Snapshot</strong><span>facts, uncertainty</span><em>先暴露未知和冲突</em></div>
+          <div class="process-step step-3"><b>03</b><strong>Active Sense</strong><span>inspect / ask / probe</span><em>补证据再行动</em></div>
+          <div class="process-step step-4"><b>04</b><strong>Task Graph + Skill</strong><span>plan / allow / execute</span><em>计划只是候选</em></div>
           <div class="process-step step-5"><b>05</b><strong>Verify</strong><span>predicate result</span><em>不相信裸 success</em></div>
           <div class="process-step step-6"><b>06</b><strong>Trace Update</strong><span>replay, world diff, promote</span><em>更新先过准入</em></div>
           <div class="evidence-band band-contract"><strong>Contract</strong><span>intent / precondition / effect / rollback</span></div>
           <div class="evidence-band band-trace"><strong>Trace</strong><span>decision / spatial diff / failure boundary / human choice</span></div>
-          <div class="evidence-band band-policy"><strong>Gate Policy</strong><span>risk gate / inspect trigger / release admission</span></div>
+          <div class="evidence-band band-policy"><strong>Active Gate</strong><span>uncertainty trigger / risk gate / release admission</span></div>
           <i class="process-marker" aria-hidden="true"></i>
         </div>
         <aside class="visual-caption compact">
-          <div><strong>执行顺序</strong><span>Task Card -> Spatial Snapshot -> Task Graph -> Gate + Skill -> Verify -> Trace。</span></div>
-          <div><strong>模块边界</strong><span>Planner 只产出候选任务图；Gate 决定是否执行；Verifier 判断 effect 是否成立。</span></div>
+          <div><strong>执行顺序</strong><span>Task Card -> Spatial Snapshot -> Active Sense -> Task Graph + Skill -> Verify -> Trace。</span></div>
+          <div><strong>主动触发</strong><span>低置信、遮挡、冲突或高风险前置条件会触发 inspect、probe 或 ask_human。</span></div>
           <div><strong>接口稳定</strong><span>替换 planner、技能或 verifier，不改 Contract、SpatialFact 和 Trace 格式。</span></div>
         </aside>
       </div>
@@ -80,8 +80,8 @@
           <span>用拓扑图 + 语义对象图 + 局部几何摘要表示空间：房间、区域、通路、物体、遮挡、可达性、可操作面和时间戳。</span>
         </article>
         <article>
-          <strong>主动空间感知</strong>
-          <span>当遮挡、错检、关系冲突或可达性未知时，主动换视角、inspect、低风险探测或请求标注。</span>
+          <strong>主动感知触发条件</strong>
+          <span>当遮挡、错检、关系冲突、可达性未知或动作风险升高时，主动换视角、inspect、低风险探测或请求标注。</span>
         </article>
         <article>
           <strong>空间更新演进</strong>
@@ -96,9 +96,9 @@
 
     <section class="wrap section-compact">
       <div class="section-title">
-        <span class="eyebrow">Observe Module</span>
-        <h2>Observe 模块：观测到空间事实</h2>
-        <p>传感器、技能反馈和人工标注被规范化为带证据、置信度、过期时间和风险语义的 SpatialFact。</p>
+        <span class="eyebrow">Observe / Active Sense Module</span>
+        <h2>Observe 模块：从观测到主动补证据</h2>
+        <p>传感器、技能反馈和人工标注被规范化为 SpatialFact；当事实不够可靠时，Observe 会产生 inspect、change_viewpoint、probe 或 ask_human 动作。</p>
       </div>
       <div class="test-matrix">
         <div class="matrix-head"><span>步骤</span><span>输入/动作</span><span>输出</span><span>为什么重要</span></div>
@@ -149,7 +149,7 @@
           </div>
           <div class="planner-orchestrator">
             <strong>Orchestrator</strong>
-            <span>reads SpatialFact Graph, risk rules and skill registry</span>
+            <span>reads SpatialFact Graph, uncertainty, risk rules and skill registry</span>
           </div>
         </div>
         <div class="planner-graph" aria-hidden="true">
