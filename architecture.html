@@ -212,13 +212,14 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Core Contracts</span>
-        <h2>契约连接系统</h2>
+        <h2>契约把计划、执行、验证和治理接起来</h2>
+        <p>Skill Contract 不是单独的研究贡献，而是系统接口：planner 用它生成可执行步骤，runtime 用它选择具体技能，governance 用它判断是否放行，verifier 用它检查 effect 是否真实达成。</p>
       </div>
-      <div class="contract-grid">
-        <article><strong>Skill Contract</strong><span>intent、precondition、effect、verifier、rollback、risk level、timeout、failure code。</span></article>
-        <article><strong>SpatialFact Graph</strong><span>visible、reachable、on/inside/near、occluded_by、path_clear 等空间事实，以及 confidence、evidence 和 expiry。</span></article>
-        <article><strong>Active Perception Policy</strong><span>根据 uncertainty、expected information gain、动作成本和风险，选择 inspect、change_viewpoint、probe、ask_human 或 defer。</span></article>
-        <article><strong>Trace Schema</strong><span>task graph、memory snapshot、skill I/O、predicate result、failure boundary、promotion decision。</span></article>
+      <div class="contract-grid connection-grid">
+        <article><strong>Planner -> Contract</strong><span>Planner 不直接下发自由文本动作，而是输出 intent、precondition、expected effect、risk 和 rollback。</span></article>
+        <article><strong>Contract -> Runtime</strong><span>Skill Runtime 根据同一个 intent/contract 选择 ROS、控制器、VLA policy 或脚本 fallback 等具体 implementation。</span></article>
+        <article><strong>Contract -> Gate / Verifier</strong><span>Governance 读取 risk 和 precondition 决定 allow、ask、inspect 或 block；Verifier 读取 effect 检查动作结果。</span></article>
+        <article><strong>Result -> Trace</strong><span>每次执行写入 skill I/O、predicate result、failure boundary 和 human decision，用于回放、指标和候选发布。</span></article>
       </div>
     </section>
 
