@@ -32,51 +32,91 @@
       <div class="wrap">
         <span class="eyebrow">Runtime Loop</span>
         <h1>一次任务如何闭环执行</h1>
-        <p>目标 -> 空间事实 -> 任务图 -> 技能调度 -> 谓词验证 -> trace 更新；运行页只跟踪这一条 episode 路径。</p>
+        <p>图像与指令 -> Observe -> SpatialFact -> Active Sense -> 任务图 -> 技能执行 -> 谓词验证 -> trace 更新；运行页只跟踪这一条 episode 路径。</p>
       </div>
     </section>
 
     <section class="wrap section-compact">
-      <div class="flow-board reveal sequence-visual">
-        <div class="flow-visual" aria-label="Spatial Agent 系统框架信息流图">
-          <svg viewBox="0 0 820 620" role="img" aria-labelledby="flowTitle flowDesc">
-            <title id="flowTitle">Spatial Agent 系统框架与信息流</title>
-            <desc id="flowDesc">Human I/O, Spatial State, Planner, Skill Runtime, Governance, Robot Environment, Verifier, Trace Store and Eval Ops form a closed loop.</desc>
-            <defs>
-              <marker id="flowArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#0f766e"></path></marker>
-              <marker id="returnArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#b84a2f"></path></marker>
-              <marker id="gateArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M 0 0 L 10 5 L 0 10 z" fill="#5b4bb7"></path></marker>
-            </defs>
-            <rect width="820" height="620" fill="#f7f8f3"></rect>
-            <g opacity="0.55"><path d="M60 90H760M60 190H760M60 290H760M60 390H760M60 490H760" stroke="#d6ddd2"></path><path d="M110 50V570M230 50V570M350 50V570M470 50V570M590 50V570M710 50V570" stroke="#d6ddd2"></path></g>
-            <path class="flow-path" marker-end="url(#flowArrow)" d="M144 118 C206 118, 216 118, 276 118"></path>
-            <path class="flow-path" marker-end="url(#flowArrow)" d="M382 118 C436 118, 444 118, 498 118"></path>
-            <path class="flow-path" marker-end="url(#flowArrow)" d="M594 146 C636 178, 638 224, 600 252"></path>
-            <path class="flow-path" marker-end="url(#flowArrow)" d="M500 280 C430 280, 416 280, 346 280"></path>
-            <path class="flow-path" marker-end="url(#flowArrow)" d="M276 304 C224 334, 214 376, 244 420"></path>
-            <path class="flow-path return" marker-end="url(#returnArrow)" d="M346 452 C426 498, 508 494, 580 444"></path>
-            <path class="flow-path gate" marker-end="url(#gateArrow)" d="M644 394 C696 344, 704 250, 638 178"></path>
-            <path class="flow-path return" marker-end="url(#returnArrow)" d="M582 408 C514 358, 484 326, 430 280"></path>
-            <g class="flow-node accent"><rect x="42" y="82" width="124" height="72"></rect><text x="104" y="112" text-anchor="middle">Human I/O</text><text class="sub" x="104" y="134" text-anchor="middle">目标/确认/打断</text></g>
-            <g class="flow-node"><rect x="274" y="74" width="132" height="88"></rect><text x="340" y="108" text-anchor="middle">Spatial State</text><text class="sub" x="340" y="130" text-anchor="middle">地图/物体/人</text></g>
-            <g class="flow-node dark"><rect x="500" y="76" width="138" height="88"></rect><text x="569" y="108" text-anchor="middle">Planner</text><text class="sub" x="569" y="132" text-anchor="middle">task graph</text></g>
-            <g class="flow-node"><rect x="500" y="244" width="142" height="86"></rect><text x="571" y="278" text-anchor="middle">Skill Runtime</text><text class="sub" x="571" y="300" text-anchor="middle">contract dispatch</text></g>
-            <g class="flow-node warn"><rect x="206" y="244" width="142" height="86"></rect><text x="277" y="278" text-anchor="middle">Governance</text><text class="sub" x="277" y="300" text-anchor="middle">gate + rollback</text></g>
-            <g class="flow-node accent"><rect x="204" y="418" width="150" height="84"></rect><text x="279" y="451" text-anchor="middle">Robot / Env</text><text class="sub" x="279" y="473" text-anchor="middle">动作和观测</text></g>
-            <g class="flow-node"><rect x="582" y="392" width="150" height="86"></rect><text x="657" y="426" text-anchor="middle">Verifier</text><text class="sub" x="657" y="448" text-anchor="middle">progress predicates</text></g>
-            <g class="flow-node dark"><rect x="402" y="476" width="132" height="74"></rect><text x="468" y="507" text-anchor="middle">Trace Store</text><text class="sub" x="468" y="528" text-anchor="middle">failure boundary</text></g>
-            <g class="flow-node warn"><rect x="42" y="466" width="126" height="72"></rect><text x="105" y="497" text-anchor="middle">Eval Ops</text><text class="sub" x="105" y="518" text-anchor="middle">回放/指标/灰度</text></g>
-            <circle class="flow-token" cx="197" cy="118" r="7" fill="#0f766e"></circle><circle class="flow-token" cx="450" cy="118" r="7" fill="#0f766e" style="animation-delay: 0.3s"></circle><circle class="flow-token" cx="392" cy="280" r="7" fill="#0f766e" style="animation-delay: 0.6s"></circle><circle class="flow-token" cx="504" cy="496" r="7" fill="#b84a2f" style="animation-delay: 0.9s"></circle><circle class="flow-token" cx="692" cy="310" r="7" fill="#5b4bb7" style="animation-delay: 1.1s"></circle>
-          </svg>
+      <div class="section-title">
+        <span class="eyebrow">Episode Walkthrough</span>
+        <h2>示例流：从图像和指令到 trace</h2>
+        <p>运行闭环页跟踪一个具体任务，不再重复系统总图；每个模块都展示该步收到什么、产出什么，以及什么时候触发主动感知。</p>
+      </div>
+      <div class="flow-board episode-board reveal sequence-visual">
+        <div class="arch-figure system-cinema runtime-cinema" aria-label="杯子入水槽任务的端到端示例动画">
+          <div class="cinema-stage">
+            <div class="cinema-rail rail-main" aria-hidden="true"></div>
+            <div class="cinema-rail rail-return" aria-hidden="true"></div>
+            <i class="cinema-token token-task" aria-hidden="true"></i>
+            <i class="cinema-token token-fact" aria-hidden="true"></i>
+            <i class="cinema-token token-action" aria-hidden="true"></i>
+            <i class="cinema-token token-feedback" aria-hidden="true"></i>
+
+            <article class="cinema-node rt-input">
+              <b>01 Input</b>
+              <strong>图像 + 文本指令</strong>
+              <div class="mini-camera-frame" aria-hidden="true"><i></i><i></i><i></i></div>
+              <span>“把桌上的杯子放进水槽，然后擦桌面。”</span>
+            </article>
+
+            <article class="cinema-node rt-observe">
+              <b>02 Observe</b>
+              <strong>抽取空间候选</strong>
+              <span>cup, table, sink；on(cup, table)；occluded_by(edge)；pose confidence 0.62。</span>
+            </article>
+
+            <article class="cinema-node rt-state">
+              <b>03 SpatialFact</b>
+              <strong>结构化空间事实</strong>
+              <div class="fact-pills">
+                <i>visible(cup)=0.71</i>
+                <i>reachable(cup)=?</i>
+                <i>inside(cup,sink)=false</i>
+              </div>
+            </article>
+
+            <article class="cinema-node rt-active">
+              <b>04 Active Sense</b>
+              <strong>不确定性触发补证据</strong>
+              <span>reachable 未知且杯沿遮挡 -> change_viewpoint + probe_reachability。</span>
+            </article>
+
+            <article class="cinema-node rt-planner">
+              <b>05 Planner</b>
+              <strong>输出可验证任务图</strong>
+              <div class="mini-runtime-plan" aria-hidden="true">
+                <i>localize</i><i>grasp</i><i>place</i><i>verify</i><i>wipe</i>
+              </div>
+              <span>每个节点带 precondition、effect、verifier 和 fallback。</span>
+            </article>
+
+            <article class="cinema-node rt-skill">
+              <b>06 Gate + Skill</b>
+              <strong>门控后执行</strong>
+              <span>allow grasp(cup)；dispatch pick policy；失败则进入 recover branch。</span>
+            </article>
+
+            <article class="cinema-node rt-verify">
+              <b>07 Verify</b>
+              <strong>空间谓词验证</strong>
+              <span>独立检查 inside(cup, sink)；裸 skill success 不算任务完成。</span>
+            </article>
+
+            <article class="cinema-node rt-trace">
+              <b>08 Trace</b>
+              <strong>写入证据链</strong>
+              <span>input、SpatialFact diff、active sense、task graph、skill I/O、verifier result。</span>
+            </article>
+          </div>
         </div>
         <aside class="run-card">
-          <h2>运行时问题：下一步是否推进任务？</h2>
+          <h2>每一步都有输入和输出</h2>
           <div class="run-steps">
-            <div><strong>1. Assemble</strong><span>装配目标、约束、空间事实状态、历史失败和技能统计。</span></div>
-            <div><strong>2. Plan</strong><span>生成带 precondition、effect、verifier、rollback 的任务图。</span></div>
-            <div><strong>3. Dispatch</strong><span>调用技能前先过权限、禁区、限速、碰撞和人工确认门槛。</span></div>
-            <div><strong>4. Verify</strong><span>检查状态谓词，失败则恢复或升级人工接管。</span></div>
-            <div><strong>5. Learn</strong><span>把 trace 写入失败账本，候选更新进入发布门槛。</span></div>
+            <div><strong>Input -> Observe</strong><span>输入是图像流、机器人位姿和文本目标；输出是对象、区域、关系、遮挡和可达性候选。</span></div>
+            <div><strong>Observe -> SpatialFact</strong><span>候选被写成带 confidence、evidence、frame、expires_at 的空间事实，而不是自由文本描述。</span></div>
+            <div><strong>SpatialFact -> Active Sense</strong><span>低置信、冲突、遮挡或高风险前置条件触发 inspect、换视角、probe 或 ask_human。</span></div>
+            <div><strong>Active Sense -> Planner</strong><span>补证据后再生成任务图；Planner 输出的是候选节点，不直接拥有执行权。</span></div>
+            <div><strong>Planner -> Verify -> Trace</strong><span>技能执行后检查空间谓词 effect；成功、失败、恢复和人工选择都写入 trace。</span></div>
           </div>
         </aside>
       </div>
@@ -135,10 +175,18 @@
           <h2>Runtime main loop</h2>
           <p>主循环只检查一件事：下一步是否推进任务；否则恢复、求助或停止。</p>
 <pre class="pseudo-code"><code>def run_episode(goal, constraints):
+    observation = sensors.read_rgbd_and_pose()
+    spatial_facts = observe.write_facts(observation, goal)
+
+    while spatial_facts.has_unresolved_uncertainty():
+        sense_action = active_sense.choose(spatial_facts)
+        new_observation = runtime.dispatch(sense_action)
+        spatial_facts = observe.update_facts(new_observation)
+
     ctx = assemble_context(
         goal=goal,
         constraints=constraints,
-        world=world_model.snapshot(),
+        world=spatial_facts.snapshot(),
         skill_stats=registry.stats(),
         failure_memory=trace_store.retrieve(goal),
     )
@@ -166,11 +214,13 @@
 
         if not decision.allowed:
             recovery = planner.replan(task_graph, reason=decision.reason)
+            if decision.requires_inspect:
+                recovery = active_sense.choose(ctx.world, reason=decision.reason)
             trace.record_gate_block(step, decision, recovery)
             continue
 
         result = runtime.dispatch(skill, step.args, timeout=skill.timeout)
-        progress = verifier.check(step.expected_effect, world_model.observe())
+        progress = verifier.check(step.expected_effect, observe.write_facts(sensors.read_rgbd_and_pose()))
         trace.record(step, skill, result, progress)
 
         if progress.ok:
