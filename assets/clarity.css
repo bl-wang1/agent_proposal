@@ -2296,23 +2296,27 @@ body {
 }
 
 .branch-verify-active {
-  border: 2px solid rgba(91, 75, 183, 0.72);
-  border-right: 0;
-  background: transparent;
+  background: rgba(91, 75, 183, 0.78);
 }
 
 .branch-verify-active::after {
-  right: -8px;
-  top: -8px;
-  border-left-color: rgba(91, 75, 183, 0.92);
+  display: none;
+}
+
+.branch-up::after {
+  display: block;
+  left: 50%;
+  top: -12px;
+  transform: translateX(-50%);
+  border-bottom-color: rgba(91, 75, 183, 0.92);
 }
 
 .branch-label {
   position: absolute;
   z-index: 2;
-  left: 120px;
-  top: 336px;
-  max-width: 160px;
+  left: 286px;
+  top: 490px;
+  max-width: 180px;
   border: 1px solid rgba(91, 75, 183, 0.42);
   background: rgba(255, 255, 255, 0.96);
   color: var(--muted);
@@ -2519,11 +2523,25 @@ body {
   height: 3px;
 }
 
-.runtime-cinema .branch-verify-active {
-  left: 116px;
-  top: 340px;
-  width: 350px;
-  height: 40px;
+.runtime-cinema .branch-down {
+  left: 114px;
+  top: 480px;
+  width: 3px;
+  height: 46px;
+}
+
+.runtime-cinema .branch-bottom {
+  left: 114px;
+  top: 526px;
+  width: 456px;
+  height: 3px;
+}
+
+.runtime-cinema .branch-up {
+  left: 570px;
+  top: 308px;
+  width: 3px;
+  height: 218px;
 }
 
 .node-detail {
