@@ -2109,9 +2109,10 @@ body {
 
 .planner-stage {
   display: grid;
-  grid-template-columns: 220px minmax(0, 1fr) 260px;
+  grid-template-columns: 210px minmax(0, 664px) 240px;
   gap: 18px;
   align-items: stretch;
+  justify-content: center;
 }
 
 #planner-orchestrator {
@@ -2161,7 +2162,9 @@ body {
 
 .planner-graph {
   position: relative;
-  min-height: 360px;
+  width: 100%;
+  max-width: 664px;
+  min-height: 430px;
   border: 1px solid var(--ink);
   background:
     linear-gradient(90deg, rgba(15, 118, 110, 0.08) 1px, transparent 1px),
@@ -2203,12 +2206,12 @@ body {
   box-shadow: 7px 7px 0 rgba(21, 25, 22, 0.06);
 }
 
-.task-localize { left: 24px; top: 126px; border-left: 5px solid var(--teal); }
-.task-grasp { left: 220px; top: 126px; border-left: 5px solid var(--teal); }
-.task-place { left: 424px; top: 126px; border-left: 5px solid var(--amber); }
-.task-verify { right: 28px; top: 126px; border-left: 5px solid var(--violet); }
-.task-recover { left: 430px; top: 18px; border-left: 5px solid var(--clay); }
-.task-wipe { left: 220px; bottom: 22px; border-left: 5px solid var(--teal-dark); }
+.task-localize { left: 22px; top: 154px; border-left: 5px solid var(--teal); }
+.task-grasp { left: 186px; top: 154px; border-left: 5px solid var(--teal); }
+.task-place { left: 350px; top: 154px; border-left: 5px solid var(--amber); }
+.task-verify { left: 514px; top: 154px; border-left: 5px solid var(--violet); }
+.task-recover { left: 350px; top: 20px; border-left: 5px solid var(--clay); }
+.task-wipe { left: 186px; bottom: 22px; border-left: 5px solid var(--teal-dark); }
 
 .planner-cursor,
 .planner-wave {
@@ -2233,8 +2236,8 @@ body {
   opacity: 0;
 }
 
-.wave-a { left: 462px; top: 154px; }
-.wave-b { right: 66px; top: 154px; border-color: rgba(91, 75, 183, 0.36); }
+.wave-a { left: 392px; top: 188px; }
+.wave-b { left: 556px; top: 188px; border-color: rgba(91, 75, 183, 0.36); }
 
 .sequence-visual.is-visible .planner-edge {
   animation: edgeDraw 900ms ease both;
@@ -2317,14 +2320,14 @@ body {
 }
 
 @keyframes plannerCursor {
-  0% { left: 84px; top: 176px; opacity: 0; }
+  0% { left: 86px; top: 214px; opacity: 0; }
   8% { opacity: 1; }
-  24% { left: 284px; top: 176px; opacity: 1; }
-  40% { left: 488px; top: 176px; opacity: 1; }
-  56% { left: 684px; top: 176px; opacity: 1; }
-  72% { left: 488px; top: 80px; opacity: 1; }
-  88% { left: 254px; top: 286px; opacity: 1; }
-  100% { left: 254px; top: 286px; opacity: 0; }
+  24% { left: 250px; top: 214px; opacity: 1; }
+  40% { left: 414px; top: 214px; opacity: 1; }
+  56% { left: 578px; top: 214px; opacity: 1; }
+  72% { left: 414px; top: 84px; opacity: 1; }
+  88% { left: 250px; top: 354px; opacity: 1; }
+  100% { left: 250px; top: 354px; opacity: 0; }
 }
 
 @keyframes plannerWave {
