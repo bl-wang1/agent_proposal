@@ -52,60 +52,84 @@
             <i class="cinema-token token-action" aria-hidden="true"></i>
             <i class="cinema-token token-feedback" aria-hidden="true"></i>
 
-            <article class="cinema-node rt-input">
+            <article class="cinema-node rt-input" tabindex="0">
               <b>01 Input</b>
               <strong>图像 + 文本指令</strong>
-              <div class="mini-camera-frame" aria-hidden="true"><i></i><i></i><i></i></div>
-              <span>“把桌上的杯子放进水槽，然后擦桌面。”</span>
+              <span>视觉观察和用户目标进入 episode。</span>
+              <div class="node-detail">
+                <div class="mini-camera-frame" aria-hidden="true"><i></i><i></i><i></i></div>
+                <p>示例指令：“把桌上的杯子放进水槽，然后擦桌面。”</p>
+              </div>
             </article>
 
-            <article class="cinema-node rt-observe">
+            <article class="cinema-node rt-observe" tabindex="0">
               <b>02 Observe</b>
               <strong>抽取空间候选</strong>
-              <span>cup, table, sink；on(cup, table)；occluded_by(edge)；pose confidence 0.62。</span>
+              <span>从观测中抽对象、区域、关系和遮挡。</span>
+              <div class="node-detail">
+                <p>输出候选：cup, table, sink；on(cup, table)；occluded_by(edge)；pose confidence 0.62。</p>
+              </div>
             </article>
 
-            <article class="cinema-node rt-state">
+            <article class="cinema-node rt-state" tabindex="0">
               <b>03 SpatialFact</b>
               <strong>结构化空间事实</strong>
-              <div class="fact-pills">
-                <i>visible(cup)=0.71</i>
-                <i>reachable(cup)=?</i>
-                <i>inside(cup,sink)=false</i>
+              <span>候选写成带证据和置信度的状态。</span>
+              <div class="node-detail">
+                <div class="fact-pills">
+                  <i>visible(cup)=0.71</i>
+                  <i>reachable(cup)=?</i>
+                  <i>inside(cup,sink)=false</i>
+                </div>
               </div>
             </article>
 
-            <article class="cinema-node rt-active">
+            <article class="cinema-node rt-active" tabindex="0">
               <b>04 Active Sense</b>
-              <strong>不确定性触发补证据</strong>
-              <span>reachable 未知且杯沿遮挡 -> change_viewpoint + probe_reachability。</span>
+              <strong>主动补证据</strong>
+              <span>不确定、冲突或风险触发感知动作。</span>
+              <div class="node-detail">
+                <p>reachable 未知且杯沿遮挡 -> change_viewpoint + probe_reachability。</p>
+              </div>
             </article>
 
-            <article class="cinema-node rt-planner">
+            <article class="cinema-node rt-planner" tabindex="0">
               <b>05 Planner</b>
               <strong>输出可验证任务图</strong>
-              <div class="mini-runtime-plan" aria-hidden="true">
-                <i>localize</i><i>grasp</i><i>place</i><i>verify</i><i>wipe</i>
+              <span>补证据后生成候选任务节点。</span>
+              <div class="node-detail">
+                <div class="mini-runtime-plan" aria-hidden="true">
+                  <i>localize</i><i>grasp</i><i>place</i><i>verify</i><i>wipe</i>
+                </div>
+                <p>每个节点带 precondition、effect、verifier 和 fallback。</p>
               </div>
-              <span>每个节点带 precondition、effect、verifier 和 fallback。</span>
             </article>
 
-            <article class="cinema-node rt-skill">
+            <article class="cinema-node rt-skill" tabindex="0">
               <b>06 Gate + Skill</b>
               <strong>门控后执行</strong>
-              <span>allow grasp(cup)；dispatch pick policy；失败则进入 recover branch。</span>
+              <span>动作先过 gate，再调用具体技能。</span>
+              <div class="node-detail">
+                <p>allow grasp(cup)；dispatch pick policy；失败则进入 recover branch。</p>
+              </div>
             </article>
 
-            <article class="cinema-node rt-verify">
+            <article class="cinema-node rt-verify" tabindex="0">
               <b>07 Verify</b>
               <strong>空间谓词验证</strong>
-              <span>独立检查 inside(cup, sink)；裸 skill success 不算任务完成。</span>
+              <span>用 effect 谓词判断任务是否推进。</span>
+              <div class="node-detail">
+                <p>独立检查 inside(cup, sink)；裸 skill success 不算任务完成。</p>
+              </div>
             </article>
 
-            <article class="cinema-node rt-trace">
+            <article class="cinema-node rt-trace" tabindex="0">
               <b>08 Trace</b>
               <strong>写入证据链</strong>
-              <span>input、SpatialFact diff、active sense、task graph、skill I/O、verifier result。</span>
+              <span>记录输入、决策、执行、验证和恢复。</span>
+              <div class="node-detail">
+                <p>input、SpatialFact diff、active sense、task graph、skill I/O、verifier result。</p>
+              </div>
             </article>
           </div>
         </div>
