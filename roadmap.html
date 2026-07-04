@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spatial Agent | 路线</title>
+  <title>Spatial Agent | 路线与风险</title>
   <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
@@ -17,9 +17,10 @@
       </a>
       <nav aria-label="主导航">
         <a href="index.html">总览</a>
-        <a href="architecture.html">系统</a>
-        <a href="runtime.html">运行</a>
-        <a href="method.html" class="active" aria-current="page">实验路线</a>
+        <a href="architecture.html">框架</a>
+        <a href="runtime.html">运行闭环</a>
+        <a href="method.html">实验验证</a>
+        <a href="roadmap.html" class="active" aria-current="page">路线与风险</a>
         <a href="sources.html">参考</a>
       </nav>
     </div>
@@ -29,9 +30,9 @@
   <main id="top" class="clarity-main">
     <section class="page-hero">
       <div class="wrap">
-        <span class="eyebrow">Roadmap</span>
-        <h1>按风险递增推进，而不是一步到真实机器人</h1>
-        <p>先把空间 schema、仿真闭环和评估协议做扎实，再进入主动感知、空间更新和真实机器人灰度。</p>
+        <span class="eyebrow">Roadmap & Risk</span>
+        <h1>从可控实验到真实部署</h1>
+        <p>路线按风险递增推进：先稳定空间闭环和评估协议，再进入主动感知、空间更新、候选发布和真实机器人灰度。</p>
       </div>
     </section>
 
@@ -163,6 +164,20 @@
         <div><strong>3. Curate</strong><span>先检查用途授权、脱敏状态、标签置信度和信息增益，再去重和筛选高价值空间片段。</span></div>
         <div><strong>4. Update</strong><span>生成 memory fact、感知器、stale detector 或 active policy candidate，不覆盖线上稳定版本。</span></div>
         <div><strong>5. Admit</strong><span>通过空间回归、安全、校准、unnecessary query 和 shadow 检查后进入灰度。</span></div>
+      </div>
+    </section>
+
+    <section class="wrap section-compact" id="risk-governance">
+      <div class="section-title">
+        <span class="eyebrow">Risk Governance</span>
+        <h2>风险治理跟路线一起推进</h2>
+        <p>安全、数据和候选策略不是最后补丁；它们决定每个阶段能否进入真实执行、shadow、灰度或回滚。</p>
+      </div>
+      <div class="risk-grid-clear">
+        <article><strong>动作安全</strong><span>权限、禁区、限速、力控、近人保护和人工确认独立于 planner；低置信度空间事实先 inspect，不直接驱动高风险动作。</span></article>
+        <article><strong>数据治理</strong><span>trace 进入训练或候选更新前先检查用途授权、脱敏状态、标签质量、重复失败和安全事件。</span></article>
+        <article><strong>候选发布</strong><span>空间事实、感知器或 active policy 候选必须通过旧任务回归、安全集、校准、overblocking 和 shadow run。</span></article>
+        <article><strong>策略审计</strong><span>Agentic RL 或恢复策略候选必须证明没有绕过 verifier、滥用 ask-human、制造表面安全或转嫁风险。</span></article>
       </div>
     </section>
 

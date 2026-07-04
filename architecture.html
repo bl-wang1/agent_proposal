@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spatial Agent | 系统</title>
+  <title>Spatial Agent | 框架</title>
   <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
@@ -17,9 +17,10 @@
       </a>
       <nav aria-label="主导航">
         <a href="index.html">总览</a>
-        <a href="architecture.html" class="active" aria-current="page">系统</a>
-        <a href="runtime.html">运行</a>
-        <a href="method.html">实验路线</a>
+        <a href="architecture.html" class="active" aria-current="page">框架</a>
+        <a href="runtime.html">运行闭环</a>
+        <a href="method.html">实验验证</a>
+        <a href="roadmap.html">路线与风险</a>
         <a href="sources.html">参考</a>
       </nav>
     </div>
@@ -29,38 +30,9 @@
   <main id="top" class="clarity-main">
     <section class="page-hero">
       <div class="wrap">
-        <span class="eyebrow">System</span>
-        <h1>任务边界、运行架构、系统协议</h1>
-        <p>Spatial Agent 是机器人 Agent 控制平面：目标、空间状态、技能、验证、安全和学习准入共享一套接口。</p>
-      </div>
-    </section>
-
-    <section id="task-model" class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Task Model</span>
-        <h2>任务边界先行</h2>
-        <p>研究对象是长程移动操作 Agent。首阶段可在可控空间验证，主线是空间事实、主动感知、技能契约、验证器和安全门控构成同一个 agent loop。</p>
-      </div>
-      <div class="definition-grid">
-        <article><strong>场景</strong><span>可建模、可验证、可治理的物理空间；环境差异由传感器、地图、运动约束和技能实现适配。</span></article>
-        <article><strong>任务</strong><span>巡检、找物、递送轻物、整理区域、对象转移、设备开关；每个任务包含 3-8 个子目标。</span></article>
-        <article><strong>输出</strong><span>任务图、技能序列、检查结果、失败归因、恢复动作、完整 trace（执行证据链）和候选更新报告。</span></article>
-        <article><strong>验收</strong><span>长程成功率、恢复率和跨域表现提升，同时不增加遗忘、安全事件、人工接管和过度拦截。</span></article>
-      </div>
-    </section>
-
-    <section id="interaction-protocol" class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Interaction Protocol</span>
-        <h2>交互即安全控制面</h2>
-        <p>执行前暴露目标、下一步动作、风险和确认需求；确认、修改、打断和接管都写入 trace。</p>
-      </div>
-      <div class="flow-strip">
-        <div><strong>1. Draft</strong><span>生成任务卡和候选任务图，不执行物理动作。</span></div>
-        <div><strong>2. Clarify</strong><span>对象、位置或权限不明确时先问清楚。</span></div>
-        <div><strong>3. Armed</strong><span>低风险自主执行，中高风险等待确认。</span></div>
-        <div><strong>4. Interrupted</strong><span>用户打断时冻结任务图，保持安全姿态。</span></div>
-        <div><strong>5. Resolved</strong><span>继续、修改、回滚、接管或取消，并写回 trace。</span></div>
+        <span class="eyebrow">Framework</span>
+        <h1>空间事实驱动的 Agent 架构</h1>
+        <p>这一页只说明系统怎么搭：空间事实状态如何进入任务图、技能契约、验证器、trace 和治理接口。</p>
       </div>
     </section>
 

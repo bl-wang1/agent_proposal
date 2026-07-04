@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spatial Agent | 实验路线</title>
+  <title>Spatial Agent | 实验验证</title>
   <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
@@ -17,9 +17,10 @@
       </a>
       <nav aria-label="主导航">
         <a href="index.html">总览</a>
-        <a href="architecture.html">系统</a>
-        <a href="runtime.html">运行</a>
-        <a href="method.html" class="active" aria-current="page">实验路线</a>
+        <a href="architecture.html">框架</a>
+        <a href="runtime.html">运行闭环</a>
+        <a href="method.html" class="active" aria-current="page">实验验证</a>
+        <a href="roadmap.html">路线与风险</a>
         <a href="sources.html">参考</a>
       </nav>
     </div>
@@ -29,9 +30,9 @@
   <main id="top" class="clarity-main">
     <section class="page-hero">
       <div class="wrap">
-        <span class="eyebrow">Experiment & Roadmap</span>
-        <h1>实验围绕空间编码、主动感知和空间验证展开</h1>
-        <p>评估从空间事实状态开始，经由主动感知补齐不确定事实，再用空间谓词验证任务是否真的推进。</p>
+        <span class="eyebrow">Experiment</span>
+        <h1>如何证明三项贡献成立</h1>
+        <p>这一页只定义实验协议：baseline、指标、split、迁移评估、消融和候选更新准入。</p>
       </div>
     </section>
 
@@ -284,35 +285,6 @@
           <strong>可用性约束</strong>
           <span>unnecessary query、overblocking、inspect、ask-human、abort 分布不能异常漂移，主动学习不能变成过度询问。</span>
         </article>
-      </div>
-    </section>
-
-    <section id="roadmap" class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Roadmap</span>
-        <h2>阶段推进按风险递增，而不是一步到真实机器人</h2>
-        <p>先把空间 schema、仿真闭环、评估协议和候选准入做稳定，再进入空间更新、主动策略学习和真实机器人灰度。</p>
-      </div>
-      <div class="timeline clean">
-        <article class="phase"><div><b>0</b><h3>最小空间闭环</h3><p>固定 spatial schema、predicate、skill contract、trace schema；完成核心接口 stub。</p></div><span class="tag">Month 0-2</span></article>
-        <article class="phase"><div><b>1</b><h3>空间状态与验证</h3><p>验证 spatial state snapshot、predicate verifier、hidden spatial failure 和恢复边界。</p></div><span class="tag">Month 2-4</span></article>
-        <article class="phase"><div><b>2</b><h3>主动空间感知</h3><p>训练/评估 inspect、换视角、低风险探测和请求标注策略，同时控制延迟和人工负担。</p></div><span class="tag">Month 4-7</span></article>
-        <article class="phase"><div><b>3</b><h3>空间更新与策略学习</h3><p>把失败 trace 转成候选空间事实、感知器和 active policy，但只在离线与 shadow 中准入。</p></div><span class="tag">Month 7-10</span></article>
-        <article class="phase"><div><b>4</b><h3>受控真实灰度</h3><p>每日任务、失败回流、每周灰度发布、可回滚版本和审计面板。</p></div><span class="tag">Month 10-12</span></article>
-      </div>
-    </section>
-
-    <section id="risk-governance" class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Risk Governance</span>
-        <h2>风险治理要嵌入运行和发布链路</h2>
-        <p>安全必须贯穿动作前检查、执行中控制、失败后恢复和上线前准入。每个动作、每次恢复、每个候选更新都必须留下可审计证据，并同时衡量安全与可用性。</p>
-      </div>
-      <div class="risk-grid-clear">
-        <article><strong>动作前</strong><span>检查权限、禁区、对象置信度、路径风险、动作可逆性和是否需要用户确认；低置信度先 inspect。</span></article>
-        <article><strong>执行中</strong><span>急停、避障、限速、力控、近人保护和远程接管独立于大模型；硬约束触发时中止技能。</span></article>
-        <article><strong>失败后</strong><span>冻结任务图，记录 failure boundary，优先 rollback、换角度、重试、询问或安全暂停。</span></article>
-        <article><strong>上线前</strong><span>候选更新必须通过旧任务回归、安全集、跨域 shadow、校准和 overblocking 检查，并保留可回滚版本。</span></article>
       </div>
     </section>
 

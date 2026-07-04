@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Spatial Agent | 运行</title>
+  <title>Spatial Agent | 运行闭环</title>
   <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
@@ -17,9 +17,10 @@
       </a>
       <nav aria-label="主导航">
         <a href="index.html">总览</a>
-        <a href="architecture.html">系统</a>
-        <a href="runtime.html" class="active" aria-current="page">运行</a>
-        <a href="method.html">实验路线</a>
+        <a href="architecture.html">框架</a>
+        <a href="runtime.html" class="active" aria-current="page">运行闭环</a>
+        <a href="method.html">实验验证</a>
+        <a href="roadmap.html">路线与风险</a>
         <a href="sources.html">参考</a>
       </nav>
     </div>
@@ -29,9 +30,9 @@
   <main id="top" class="clarity-main">
     <section class="page-hero">
       <div class="wrap">
-        <span class="eyebrow">Runtime Flow</span>
-        <h1>一次任务的运行路径</h1>
-        <p>目标 -> 空间事实 -> 任务图 -> 技能调度 -> 谓词验证 -> trace 更新。</p>
+        <span class="eyebrow">Runtime Loop</span>
+        <h1>一次任务如何闭环执行</h1>
+        <p>目标 -> 空间事实 -> 任务图 -> 技能调度 -> 谓词验证 -> trace 更新；运行页只跟踪这一条 episode 路径。</p>
       </div>
     </section>
 
@@ -84,8 +85,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Episode Evidence Chain</span>
-        <h2>Trace：学习前的证据链</h2>
-        <p>trace 串起意图、证据、风险、结果和恢复动作；只有可复盘、可治理的片段进入候选更新。</p>
+        <h2>Trace：一次任务的证据链</h2>
+        <p>trace 串起意图、证据、风险、结果和恢复动作，用来复盘任务是否真的推进。</p>
       </div>
       <div class="test-matrix">
         <div class="matrix-head"><span>阶段</span><span>写入 trace 的证据</span><span>失败时如何处理</span><span>后续用途</span></div>
@@ -125,20 +126,6 @@
           <span>低质量、未授权或高风险片段隔离，不进入训练池。</span>
           <span>用于候选 bundle、发布门槛和事故复盘。</span>
         </div>
-      </div>
-    </section>
-
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Failure To Update</span>
-        <h2>失败不等于训练样本</h2>
-      </div>
-      <div class="flow-strip release-flow">
-        <div><strong>1. Localize</strong><span>先判断失败边界：world、planning、skill、verifier、governance、data quality。</span></div>
-        <div><strong>2. Repair</strong><span>优先选择 inspect、rollback、retry、replan、ask-human 或安全终止。</span></div>
-        <div><strong>3. Qualify</strong><span>检查授权、脱敏、标签置信度、重复度、replay 平衡和安全事件。</span></div>
-        <div><strong>4. Candidate</strong><span>生成 planner、verifier、recovery、adapter 或 skill implementation 候选更新。</span></div>
-        <div><strong>5. Promote</strong><span>通过新任务、旧任务、安全集、校准、overblocking 和 shadow run 后才灰度。</span></div>
       </div>
     </section>
 
