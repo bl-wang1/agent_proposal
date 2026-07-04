@@ -177,7 +177,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Research Questions</span>
-        <h2>三个问题，一个支撑边界</h2>
+        <h2>三个研究问题</h2>
       </div>
       <div class="hypothesis-grid">
         <article>
@@ -192,32 +192,38 @@
           <strong>Verify</strong>
           <span>Spatial Verifier 能否比技能返回值更早发现 hidden spatial failure。</span>
         </article>
-        <article class="support-span">
-          <strong>Support</strong>
-          <span>Skill Contract、治理和候选发布作为长期支撑，是否能在不扩大主贡献边界的情况下服务三项核心机制。</span>
-        </article>
       </div>
     </section>
 
     <section class="wrap section-compact">
       <div class="section-title">
-        <span class="eyebrow">System Map</span>
-        <h2>六层系统，一条运行主线</h2>
+        <span class="eyebrow">System Layers</span>
+        <h2>六层系统</h2>
+        <p>系统分成六个职责层：交互接收目标，空间状态保存事实，Agent 推理生成计划，技能执行动作，安全治理做门控，评估运维负责回放和发布。</p>
       </div>
-      <div class="overview-map">
-        <div><strong>人机交互</strong><span>目标输入、任务卡、确认、打断、接管。</span></div>
-        <div><strong>空间事实状态</strong><span>地图、物体、人、关系、时间、置信度。</span></div>
-        <div><strong>Agent 推理</strong><span>目标理解、任务图、技能选择、失败解释。</span></div>
-        <div><strong>技能执行</strong><span>感知、导航、操作、沟通、恢复。</span></div>
-        <div><strong>安全治理</strong><span>权限、禁区、限速、力控、隐私、审计。</span></div>
-        <div><strong>评估运维</strong><span>回放、指标、失败分类、灰度发布。</span></div>
+      <div class="system-layer-frame" aria-label="六层系统框图">
+        <div class="system-layer layer-human"><b>01</b><strong>人机交互</strong><span>目标输入、任务卡、确认、打断、接管。</span></div>
+        <div class="system-layer layer-state"><b>02</b><strong>空间事实状态</strong><span>地图、物体、人、关系、时间、置信度。</span></div>
+        <div class="system-layer layer-agent"><b>03</b><strong>Agent 推理</strong><span>目标理解、任务图、技能选择、失败解释。</span></div>
+        <div class="system-layer layer-skill"><b>04</b><strong>技能执行</strong><span>感知、导航、操作、沟通、恢复。</span></div>
+        <div class="system-layer layer-safety"><b>05</b><strong>安全治理</strong><span>权限、禁区、限速、力控、隐私、审计。</span></div>
+        <div class="system-layer layer-eval"><b>06</b><strong>评估运维</strong><span>回放、指标、失败分类、灰度发布。</span></div>
       </div>
-      <div class="flow-strip">
-        <div><strong>1. Goal</strong><span>用户给任务，系统展示计划和风险。</span></div>
-        <div><strong>2. State</strong><span>空间事实图提供当前假设。</span></div>
-        <div><strong>3. Act</strong><span>runtime 调度带契约的技能。</span></div>
-        <div><strong>4. Verify</strong><span>空间谓词验证器判断 expected relation/effect 是否达成。</span></div>
-        <div><strong>5. Update</strong><span>trace 形成空间证据链，用于更新 SpatialFact、感知器和主动学习队列。</span></div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Runtime Flow</span>
+        <h2>一条运行主线</h2>
+        <p>一次任务沿着目标、状态、动作、验证和更新前进；验证结果和 trace 再回写为空间事实，驱动下一轮决策。</p>
+      </div>
+      <div class="runtime-flow-diagram" aria-label="一条运行主线流程图">
+        <div class="runtime-step"><b>1</b><strong>Goal</strong><span>用户给任务，系统展示计划和风险。</span></div>
+        <div class="runtime-step"><b>2</b><strong>State</strong><span>空间事实图提供当前假设。</span></div>
+        <div class="runtime-step"><b>3</b><strong>Act</strong><span>runtime 调度带契约的技能。</span></div>
+        <div class="runtime-step"><b>4</b><strong>Verify</strong><span>空间谓词验证器判断 expected relation/effect 是否达成。</span></div>
+        <div class="runtime-step"><b>5</b><strong>Update</strong><span>trace 形成空间证据链，用于更新 SpatialFact、感知器和主动学习队列。</span></div>
+        <div class="runtime-feedback"><strong>feedback</strong><span>更新后的事实、置信度和失败标签回到 State。</span></div>
       </div>
     </section>
 
