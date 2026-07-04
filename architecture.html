@@ -31,41 +31,107 @@
     <section class="page-hero">
       <div class="wrap">
         <span class="eyebrow">Framework</span>
-        <h1>空间事实驱动的 Agent 架构</h1>
-        <p>这一页只说明系统怎么搭：空间事实状态如何进入任务图、技能契约、验证器、trace 和治理接口。</p>
+        <h1>主动空间感知的 Agent 框架</h1>
+        <p>这一页只说明系统框架：目标、观察、空间事实状态、任务图、技能执行、谓词验证和 trace 如何通过稳定接口连接。</p>
       </div>
     </section>
 
     <section class="wrap section-compact">
       <div class="section-title">
-        <span class="eyebrow">Ordered Runtime Flow</span>
-        <h2>运行链路：证据先行</h2>
-        <p>Contract 定义预期；Trace 记录事实；Policy 决定 allow、ask、inspect、block 或 rollback。</p>
+        <span class="eyebrow">System Framework</span>
+        <h2>系统框架：核心模块与信息流</h2>
+        <p>框架由空间状态层、规划编排层、执行验证层组成；Contract 固定动作语义，Trace 串起运行证据，Gate Policy 控制风险动作。</p>
       </div>
       <div class="definition-grid three-up">
-        <article><strong>Contract</strong><span>技能契约。定义一个动作的 intent、precondition、expected effect、verifier、rollback、risk level 和 failure code，例如 `place(cup, sink)` 必须满足 cup in gripper、sink reachable，并产生 inside(cup, sink)。</span></article>
-        <article><strong>Trace</strong><span>执行证据链。记录 spatial state snapshot、空间事实、主动感知动作、skill call、gate decision、verifier result、失败边界和 human label，用于复盘和更新空间事实状态。</span></article>
-        <article><strong>Policy</strong><span>决策与准入规则。根据 Contract 和 Trace 决定 allow、ask、inspect、block、rollback，以及候选空间事实、感知器或 active policy 能否进入 shadow/灰度。</span></article>
+        <article><strong>空间状态层</strong><span>把 RGB-D、地图、技能反馈和人工标注写成 SpatialFact Graph，保留 confidence、evidence、expires_at 和 risk_relevance。</span></article>
+        <article><strong>规划编排层</strong><span>Planner 读取目标、约束和空间状态，输出带 precondition、expected effect、verifier 和 fallback 的可验证任务图。</span></article>
+        <article><strong>执行验证层</strong><span>Gate Policy 先决定 allow、ask、inspect、block 或 rollback；技能执行后由空间谓词 verifier 判断 effect 是否成立，并写入 trace。</span></article>
       </div>
       <div class="visual-shell process-visual sequence-visual">
-        <div class="process-map" aria-label="Spatial Agent 信息按顺序进入证据链">
+        <div class="process-map" aria-label="Spatial Agent 系统模块与信息流">
           <div class="process-line" aria-hidden="true"></div>
           <div class="process-step step-1"><b>01</b><strong>Task Card</strong><span>goal, object, risk</span><em>用户确认的是任务卡</em></div>
           <div class="process-step step-2"><b>02</b><strong>Spatial Snapshot</strong><span>facts, confidence</span><em>低置信度先 inspect</em></div>
           <div class="process-step step-3"><b>03</b><strong>Task Graph</strong><span>precondition, effect</span><em>计划只是候选</em></div>
           <div class="process-step step-4"><b>04</b><strong>Gate + Skill</strong><span>allow / ask / block</span><em>动作前独立门控</em></div>
           <div class="process-step step-5"><b>05</b><strong>Verify</strong><span>predicate result</span><em>不相信裸 success</em></div>
-          <div class="process-step step-6"><b>06</b><strong>Trace + Learn</strong><span>replay, shadow, promote</span><em>更新先过准入</em></div>
-          <div class="evidence-band band-contract"><strong>Contract</strong><span>precondition / effect / rollback / adapter test</span></div>
-          <div class="evidence-band band-trace"><strong>Trace</strong><span>decision / world diff / failure boundary / human choice</span></div>
-          <div class="evidence-band band-policy"><strong>Policy</strong><span>risk gate / data governance / release admission</span></div>
+          <div class="process-step step-6"><b>06</b><strong>Trace Update</strong><span>replay, world diff, promote</span><em>更新先过准入</em></div>
+          <div class="evidence-band band-contract"><strong>Contract</strong><span>intent / precondition / effect / rollback</span></div>
+          <div class="evidence-band band-trace"><strong>Trace</strong><span>decision / spatial diff / failure boundary / human choice</span></div>
+          <div class="evidence-band band-policy"><strong>Gate Policy</strong><span>risk gate / inspect trigger / release admission</span></div>
           <i class="process-marker" aria-hidden="true"></i>
         </div>
         <aside class="visual-caption compact">
           <div><strong>执行顺序</strong><span>Task Card -> Spatial Snapshot -> Task Graph -> Gate + Skill -> Verify -> Trace。</span></div>
-          <div><strong>证据类型</strong><span>Contract 约束动作；Trace 记录结果；Policy 控制风险。</span></div>
-          <div><strong>协议稳定</strong><span>替换 planner、技能或 verifier，不改 evidence chain。</span></div>
+          <div><strong>模块边界</strong><span>Planner 只产出候选任务图；Gate 决定是否执行；Verifier 判断 effect 是否成立。</span></div>
+          <div><strong>接口稳定</strong><span>替换 planner、技能或 verifier，不改 Contract、SpatialFact 和 Trace 格式。</span></div>
         </aside>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Spatial State Layer</span>
+        <h2>空间状态层：可补充、可验证、可更新</h2>
+      </div>
+      <div class="env-grid">
+        <article>
+          <strong>空间事实状态</strong>
+          <span>用拓扑图 + 语义对象图 + 局部几何摘要表示空间：房间、区域、通路、物体、遮挡、可达性、可操作面和时间戳。</span>
+        </article>
+        <article>
+          <strong>主动空间感知</strong>
+          <span>当遮挡、错检、关系冲突或可达性未知时，主动换视角、inspect、低风险探测或请求标注。</span>
+        </article>
+        <article>
+          <strong>空间更新演进</strong>
+          <span>每次任务产生 trace、spatial failure label 和 world diff；候选空间事实或感知更新先回放验证，再进入 shadow 和灰度。</span>
+        </article>
+        <article>
+          <strong>空间事实格式</strong>
+          <span>每条 SpatialFact 保留 subject、predicate、object、frame、confidence、evidence、expires_at 和 risk_relevance；过期或低置信事实必须重新观察。</span>
+        </article>
+      </div>
+    </section>
+
+    <section class="wrap section-compact">
+      <div class="section-title">
+        <span class="eyebrow">Observe Module</span>
+        <h2>Observe 模块：观测到空间事实</h2>
+        <p>传感器、技能反馈和人工标注被规范化为带证据、置信度、过期时间和风险语义的 SpatialFact。</p>
+      </div>
+      <div class="test-matrix">
+        <div class="matrix-head"><span>步骤</span><span>输入/动作</span><span>输出</span><span>为什么重要</span></div>
+        <div>
+          <span>1. Raw observation</span>
+          <span>RGB-D/video、机器人位姿、地图、技能反馈、历史 memory 和 human label。</span>
+          <span>可追溯的 observation packet。</span>
+          <span>所有后续空间事实都能回到具体证据源。</span>
+        </div>
+        <div>
+          <span>2. Spatial candidates</span>
+          <span>抽取对象、区域、局部几何、遮挡、可达性和 affordance 候选。</span>
+          <span>visible、reachable、on/inside/near、occluded_by、placeable_on 候选。</span>
+          <span>把“看见什么”转成 planner 和 verifier 能使用的空间谓词候选。</span>
+        </div>
+        <div>
+          <span>3. SpatialFact write</span>
+          <span>为每个候选写入 subject、predicate、object、frame、confidence、evidence、source_viewpoint 和 expires_at。</span>
+          <span>带证据和生命周期的 SpatialFact。</span>
+          <span>空间状态不再是静态 3D memory，而是可查询、可过期、可复核的 Agent state。</span>
+        </div>
+        <div>
+          <span>4. Conflict / expiry / risk</span>
+          <span>新旧事实冲突时写入 conflict_set；过期或低置信事实降权；高风险相关事实进入 gate。</span>
+          <span>inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span>
+          <span>错误记忆不会被直接覆盖或直接驱动高风险动作。</span>
+        </div>
+        <div>
+          <span>5. Decide / Verify handoff</span>
+          <span>Planner 读取 SpatialFact Graph；verifier 用独立证据检查 expected effect。</span>
+          <span>下一步计划、主动感知动作或 hidden spatial failure 标记。</span>
+          <span>Observe 的产物直接影响执行选择和空间验证，而不是只作为背景上下文。</span>
+        </div>
       </div>
     </section>
 
@@ -117,75 +183,9 @@
 
     <section class="wrap section-compact">
       <div class="section-title">
-        <span class="eyebrow">Spatial Intelligence</span>
-        <h2>空间能力：可补充、可验证、可更新</h2>
-      </div>
-      <div class="env-grid">
-        <article>
-          <strong>空间事实状态</strong>
-          <span>用拓扑图 + 语义对象图 + 局部几何摘要表示空间：房间、区域、通路、物体、遮挡、可达性、可操作面和时间戳。</span>
-        </article>
-        <article>
-          <strong>主动空间感知</strong>
-          <span>当遮挡、错检、关系冲突或可达性未知时，主动换视角、inspect、低风险探测或请求标注。</span>
-        </article>
-        <article>
-          <strong>空间更新演进</strong>
-          <span>每次任务产生 trace、spatial failure label 和 world diff；候选空间事实或感知更新先回放验证，再进入 shadow 和灰度。</span>
-        </article>
-        <article>
-          <strong>空间事实格式</strong>
-          <span>每条 SpatialFact 保留 subject、predicate、object、frame、confidence、evidence、expires_at 和 risk_relevance；过期或低置信事实必须重新观察。</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Observe Pipeline</span>
-        <h2>Observe：观测到空间事实</h2>
-        <p>传感器、技能反馈和人工标注被规范化为带证据、置信度、过期时间和风险语义的 SpatialFact。</p>
-      </div>
-      <div class="test-matrix">
-        <div class="matrix-head"><span>步骤</span><span>输入/动作</span><span>输出</span><span>为什么重要</span></div>
-        <div>
-          <span>1. Raw observation</span>
-          <span>RGB-D/video、机器人位姿、地图、技能反馈、历史 memory 和 human label。</span>
-          <span>可追溯的 observation packet。</span>
-          <span>所有后续空间事实都能回到具体证据源。</span>
-        </div>
-        <div>
-          <span>2. Spatial candidates</span>
-          <span>抽取对象、区域、局部几何、遮挡、可达性和 affordance 候选。</span>
-          <span>visible、reachable、on/inside/near、occluded_by、placeable_on 候选。</span>
-          <span>把“看见什么”转成 planner 和 verifier 能使用的空间谓词候选。</span>
-        </div>
-        <div>
-          <span>3. SpatialFact write</span>
-          <span>为每个候选写入 subject、predicate、object、frame、confidence、evidence、source_viewpoint 和 expires_at。</span>
-          <span>带证据和生命周期的 SpatialFact。</span>
-          <span>空间状态不再是静态 3D memory，而是可查询、可过期、可复核的 Agent state。</span>
-        </div>
-        <div>
-          <span>4. Conflict / expiry / risk</span>
-          <span>新旧事实冲突时写入 conflict_set；过期或低置信事实降权；高风险相关事实进入 gate。</span>
-          <span>inspect、change_viewpoint、probe_reachability、ask_human 或 defer。</span>
-          <span>错误记忆不会被直接覆盖或直接驱动高风险动作。</span>
-        </div>
-        <div>
-          <span>5. Decide / Verify handoff</span>
-          <span>Planner 读取 SpatialFact Graph；verifier 用独立证据检查 expected effect。</span>
-          <span>下一步计划、主动感知动作或 hidden spatial failure 标记。</span>
-          <span>Observe 的产物直接影响执行选择和空间验证，而不是只作为背景上下文。</span>
-        </div>
-      </div>
-    </section>
-
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Core Contracts</span>
-        <h2>契约把计划、执行、验证和治理接起来</h2>
-        <p>Skill Contract 不是单独的研究贡献，而是系统接口：planner 用它生成可执行步骤，runtime 用它选择具体技能，governance 用它判断是否放行，verifier 用它检查 effect 是否真实达成。</p>
+        <span class="eyebrow">Skill Contract Module</span>
+        <h2>Skill Contract 模块：连接计划、执行与验证</h2>
+        <p>Skill Contract 不是单独的研究贡献，而是系统接口：planner 用它生成可执行步骤，runtime 用它选择具体技能，Gate Policy 用它判断是否放行，verifier 用它检查 effect 是否真实达成。</p>
       </div>
       <div class="contract-grid connection-grid">
         <article><strong>Planner -> Contract</strong><span>Planner 不直接下发自由文本动作，而是输出 intent、precondition、expected effect、risk 和 rollback。</span></article>
@@ -198,7 +198,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Runtime Interfaces</span>
-        <h2>模块边界写成稳定 API</h2>
+        <h2>接口边界：模块输入输出固定</h2>
         <p>第一版先固定输入输出；后续替换 planner、VLA、导航栈或 verifier，不改变 trace 和治理协议。</p>
       </div>
       <div class="test-matrix">
@@ -245,7 +245,7 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Minimum Stack</span>
-        <h2>组件可替换</h2>
+        <h2>最小落地栈：组件可替换</h2>
         <p>先跑通 runtime、trace、verifier 和治理协议；低层导航、操作和学习策略封装为 SkillContract。</p>
       </div>
       <div class="env-grid">
@@ -258,7 +258,7 @@
           <span>导航/操作技能可由 ROS、经典控制器、OpenVLA/Octo/LeRobot policy 或脚本 fallback 包装为 SkillContract。</span>
         </article>
         <article>
-          <strong>World model</strong>
+          <strong>Spatial memory</strong>
           <span>首版从 2D/3D semantic memory、对象表和时间戳事实开始；低置信度事实触发 inspect，不直接执行。</span>
         </article>
         <article>
