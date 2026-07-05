@@ -2442,6 +2442,22 @@ body {
   transition: transform 180ms ease, box-shadow 180ms ease;
 }
 
+.runtime-cinema .cinema-node::after {
+  content: "";
+  position: absolute;
+  top: 11px;
+  right: 11px;
+  display: grid;
+  place-items: center;
+  width: 17px;
+  height: 17px;
+  border: 1px solid rgba(21, 25, 22, 0.3);
+  background:
+    linear-gradient(var(--teal-dark), var(--teal-dark)) center / 9px 1px no-repeat,
+    linear-gradient(var(--teal-dark), var(--teal-dark)) center / 1px 9px no-repeat,
+    rgba(247, 248, 243, 0.92);
+}
+
 .runtime-cinema .cinema-node:hover,
 .runtime-cinema .cinema-node:focus,
 .runtime-cinema .cinema-node:focus-within {
@@ -2449,6 +2465,16 @@ body {
   transform: translateY(-2px);
   box-shadow: 10px 14px 0 rgba(21, 25, 22, 0.08);
   outline: none;
+}
+
+.runtime-cinema .cinema-node:hover::after,
+.runtime-cinema .cinema-node:focus::after,
+.runtime-cinema .cinema-node:focus-within::after {
+  border-color: var(--teal);
+  background:
+    linear-gradient(var(--white), var(--white)) center / 9px 1px no-repeat,
+    linear-gradient(var(--white), var(--white)) center / 1px 9px no-repeat,
+    var(--teal);
 }
 
 .rt-input { left: 26px; top: 40px; border-left: 5px solid var(--clay); }

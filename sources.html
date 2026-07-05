@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Spatial Agent | 参考</title>
   <meta name="description" content="Spatial Agent：主动空间感知机器人 Agent 框架 proposal" />
+  <link rel="icon" href="assets/favicon.svg" type="image/svg+xml" />
   <link rel="stylesheet" href="assets/styles.css" />
   <link rel="stylesheet" href="assets/clarity.css" />
 </head>
@@ -39,8 +40,8 @@
     <section class="wrap section-compact">
       <div class="section-title">
         <span class="eyebrow">Evidence Map</span>
-        <h2>研究假设对应的证据</h2>
-        <p>来源被组织成三类证据：低层机器人能力正在成熟；长程任务需要显式空间状态；Agent runtime 的工程模式可复用。</p>
+        <h2>研究假设与长期路线证据</h2>
+        <p>前两类证据支撑核心贡献；治理、持续更新和安全准入作为系统扩展与长期路线的依据。</p>
       </div>
       <div class="test-matrix source-matrix">
         <div class="matrix-head"><span>研究命题</span><span>支撑来源</span><span>被 Spatial Agent 吸收的设计</span><span>仍未解决的空白</span></div>
@@ -57,9 +58,9 @@
           <span>现有机器人 Agent 往往被动使用观测，缺少把信息增益、动作成本和安全风险合在一起的主动策略。</span>
         </div>
         <div>
-          <span>H3 · 空间更新需要受控准入</span>
+          <span>长期路线 · 空间更新需要受控准入</span>
           <span>Voyager、Agent Lightning、持续 RL、Datasheets for Datasets、Data Cards、OWASP LLM 风险</span>
-          <span>把 trace、失败归因、主动标注、candidate memory/perception bundle、shadow evaluation 和 safety gate 作为空间更新准入链路。</span>
+          <span>把 trace、失败归因、主动标注、candidate memory/perception bundle、shadow evaluation 和 safety gate 放入后续扩展链路。</span>
           <span>真实机器人不能把所有新观测直接写入空间事实状态；必须评估错误标签、过期事实、安全、过度询问和旧空间回归。</span>
         </div>
       </div>
