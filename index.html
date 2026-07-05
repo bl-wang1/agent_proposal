@@ -58,7 +58,7 @@
       <div class="section-title">
         <span class="eyebrow">Architecture Head Figure</span>
         <h2>整体架构：四条信息流</h2>
-        <p>Observe 写入空间事实；Decide 选择主动感知或任务图；Execute 调度技能；Verify / Learn 验证 effect 并回写候选更新。</p>
+        <p>Observe 写入空间事实；Decide 由 Planner + Gate 生成候选任务图并决定是否放行；Execute 由 Skill Runtime 调用具体技能；Verify / Learn 验证 effect 并回写 trace。</p>
       </div>
       <div class="arch-figure system-cinema sequence-visual" aria-label="Spatial Agent 端到端动画架构图">
         <div class="cinema-stage">
@@ -86,7 +86,7 @@
           </article>
           <article class="cinema-node node-planner">
             <b>04</b>
-            <strong>Planner in Orchestrator</strong>
+            <strong>Decide: Planner</strong>
             <span>task nodes with preconditions, effects and recovery edges</span>
             <div class="mini-task-graph" aria-hidden="true">
               <i></i><i></i><i></i><i></i><i></i>
@@ -99,7 +99,7 @@
           </article>
           <article class="cinema-node node-skill">
             <b>06</b>
-            <strong>Skill Runtime</strong>
+            <strong>Execute: Skill Runtime</strong>
             <span>navigate, grasp, place, open, VLA/controller wrapper</span>
           </article>
           <article class="cinema-node node-verify">
