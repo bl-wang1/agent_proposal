@@ -2238,6 +2238,15 @@ body {
   border-left: 0;
 }
 
+.rail-trace {
+  left: 124px;
+  top: 398px;
+  width: 2px;
+  height: 28px;
+  border: 0;
+  background: rgba(91, 75, 183, 0.48);
+}
+
 .episode-flow-lines {
   position: absolute;
   inset: 0;
