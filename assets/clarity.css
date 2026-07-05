@@ -2251,10 +2251,10 @@ body {
   left: 236px;
   top: 174px;
   width: 342px;
-  height: 96px;
-  border: 2px solid rgba(91, 75, 183, 0.42);
-  border-right: 0;
-  border-bottom: 0;
+  height: 136px;
+  border: 0;
+  border-right: 2px solid rgba(91, 75, 183, 0.42);
+  border-bottom: 2px solid rgba(91, 75, 183, 0.42);
 }
 
 .rail-update::after {
@@ -2581,9 +2581,9 @@ body {
 
 .runtime-cinema .branch-up {
   left: 570px;
-  top: 308px;
+  top: 352px;
   width: 3px;
-  height: 218px;
+  height: 174px;
 }
 
 .node-detail {

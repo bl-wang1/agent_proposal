@@ -133,41 +133,6 @@
       </div>
     </section>
 
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Spatial Update Flywheel</span>
-        <h2>空间更新闭环以失败归因为中心</h2>
-        <p>真实观测不是直接写入空间事实状态，而是先被结构化、诊断、筛选和回归评估；只有通过准入门槛的候选空间更新才能进入真实机器人。</p>
-      </div>
-      <div class="visual-shell flywheel-shell sequence-visual" aria-label="持续学习数据飞轮">
-        <div class="flywheel-stage">
-          <div class="flywheel-core">
-            <strong>Spatial<br />Ledger</strong>
-            <span>trace evidence</span>
-          </div>
-          <div class="fly-step step-trace"><b>1</b><strong>Trace</strong><span>episode evidence</span></div>
-          <div class="fly-step step-diagnose"><b>2</b><strong>Diagnose</strong><span>spatial boundary</span></div>
-          <div class="fly-step step-curate"><b>3</b><strong>Curate</strong><span>label + redaction</span></div>
-          <div class="fly-step step-train"><b>4</b><strong>Update</strong><span>spatial bundle</span></div>
-          <div class="fly-step step-admit"><b>5</b><strong>Admit</strong><span>shadow + gate</span></div>
-          <span class="fly-ring" aria-hidden="true"></span>
-          <span class="fly-runner" aria-hidden="true"></span>
-        </div>
-        <aside class="visual-caption compact">
-          <div><strong>中心资产是空间账本</strong><span>每次空间失败必须沉淀为可回放证据，而不是口头复盘。</span></div>
-          <div><strong>学习对象不是单一模型</strong><span>候选更新可以是 memory fact、relation checker、reachability predictor 或 active policy。</span></div>
-          <div><strong>发布是闭环的一部分</strong><span>shadow、空间回归、安全和过度询问检查决定更新能否进入真实执行。</span></div>
-        </aside>
-      </div>
-      <div class="flow-strip release-flow">
-        <div><strong>1. Trace</strong><span>记录空间事实、观察视角、技能输入输出、验证结果、人工标注和失败边界。</span></div>
-        <div><strong>2. Diagnose</strong><span>把失败归因到对象定位、关系、遮挡、可达性、affordance、技能、验证器或安全门控。</span></div>
-        <div><strong>3. Curate</strong><span>先检查用途授权、脱敏状态、标签置信度和信息增益，再去重和筛选高价值空间片段。</span></div>
-        <div><strong>4. Update</strong><span>生成 memory fact、感知器、stale detector 或 active policy candidate，不覆盖线上稳定版本。</span></div>
-        <div><strong>5. Admit</strong><span>通过空间回归、安全、校准、unnecessary query 和 shadow 检查后进入灰度。</span></div>
-      </div>
-    </section>
-
     <section class="wrap section-compact" id="risk-governance">
       <div class="section-title">
         <span class="eyebrow">Risk Governance</span>
