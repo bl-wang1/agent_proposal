@@ -2247,6 +2247,28 @@ body {
   background: rgba(91, 75, 183, 0.48);
 }
 
+.rail-update {
+  left: 236px;
+  top: 174px;
+  width: 342px;
+  height: 96px;
+  border: 2px solid rgba(91, 75, 183, 0.42);
+  border-right: 0;
+  border-bottom: 0;
+}
+
+.rail-update::after {
+  content: "";
+  position: absolute;
+  right: -1px;
+  top: -7px;
+  width: 0;
+  height: 0;
+  border-left: 8px solid transparent;
+  border-right: 8px solid transparent;
+  border-bottom: 10px solid rgba(91, 75, 183, 0.68);
+}
+
 .episode-flow-lines {
   position: absolute;
   inset: 0;
