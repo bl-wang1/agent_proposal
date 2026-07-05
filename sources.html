@@ -41,7 +41,7 @@
       <div class="section-title">
         <span class="eyebrow">Evidence Map</span>
         <h2>研究假设对应的证据</h2>
-        <p>这里聚焦两类核心证据：显式空间事实状态，以及由不确定性触发的主动感知。</p>
+        <p>这里对齐总览页的三条核心贡献：结构化空间事实状态、基于不确定性的主动感知、空间谓词 verifier。</p>
       </div>
       <div class="test-matrix source-matrix">
         <div class="matrix-head"><span>研究命题</span><span>支撑来源</span><span>被 Spatial Agent 吸收的设计</span><span>仍未解决的空白</span></div>
@@ -57,9 +57,12 @@
           <span>在低置信度、遮挡、关系冲突和可达性未知时触发 inspect、换视角、探测或请求标注。</span>
           <span>现有机器人 Agent 往往被动使用观测，缺少把信息增益、动作成本和安全风险合在一起的主动策略。</span>
         </div>
-      </div>
-      <div class="protocol-table">
-        <div><strong>系统扩展来源</strong><span>Voyager、Agent Lightning、持续 RL、Datasheets for Datasets、Data Cards 和 OWASP LLM 风险用于支撑长期更新、准入和治理，不作为核心研究假设。</span></div>
+        <div>
+          <span>H3 · 技能结果需要空间谓词验证</span>
+          <span>EmbodiedBench、Habitat 3.0、RoboCasa、Open X-Embodiment、OMEGA</span>
+          <span>不只读取 skill success，而是用 visible、reachable、on/inside/near 等空间谓词验证执行后的 effect。</span>
+          <span>多数评估仍偏最终成功率，缺少对隐藏空间失败、关系未达成和可达性误判的独立诊断。</span>
+        </div>
       </div>
     </section>
 
