@@ -1472,7 +1472,7 @@ body {
   }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 0px) {
   .hero-grid,
   .problem-solution,
   .example-panel,
@@ -1622,7 +1622,7 @@ body {
   }
 }
 
-@media (max-width: 640px) {
+@media (max-width: 0px) {
   .clarity-hero,
   .page-hero,
   .section-compact {
@@ -2984,7 +2984,7 @@ body {
   100% { transform: scale(1.8); opacity: 0; }
 }
 
-@media (max-width: 980px) {
+@media (max-width: 0px) {
   .cinema-stage {
     min-height: auto;
     display: grid;
@@ -3121,4 +3121,23 @@ body {
     grid-column: 1;
     grid-row: auto;
   }
+}
+
+html,
+body {
+  min-width: 1200px;
+}
+
+body {
+  overflow-x: auto;
+}
+
+html {
+  overflow-x: auto;
+}
+
+.topbar,
+.clarity-main,
+footer {
+  min-width: 1200px;
 }
