@@ -225,8 +225,8 @@
 
     <section class="wrap section-compact">
       <div class="section-title">
-        <span class="eyebrow">Spatial Learning</span>
-        <h2>实验重点验证空间编码、主动感知和受控更新</h2>
+        <span class="eyebrow">Spatial Evaluation</span>
+        <h2>实验重点验证空间编码、主动感知和空间验证</h2>
       </div>
       <div class="env-grid">
         <article>
@@ -242,49 +242,8 @@
           <span>用空间谓词 verifier 检查 on、inside、reachable、path_clear、object_moved 等 effect，观察 hidden spatial failure 是否下降。</span>
         </article>
         <article>
-          <strong>受控更新</strong>
-          <span>失败 trace 只生成候选空间事实、候选感知器或候选 active policy；通过回放、shadow 和安全检查后才进入线上。</span>
-        </article>
-      </div>
-    </section>
-
-    <section class="wrap section-compact">
-      <div class="section-title">
-        <span class="eyebrow">Quantitative Gate</span>
-        <h2>候选空间更新必须先过量化门槛，再进入真实机器人</h2>
-        <p>阈值不是最终结论，而是首轮实验协议的执行标准；后续根据机器人平台、任务风险和样本量调整。</p>
-      </div>
-      <div class="visual-shell gate-funnel sequence-visual" aria-label="候选更新准入漏斗">
-        <div class="funnel-stage">
-          <div class="funnel-row wide"><strong>Candidate Bundle</strong><span>SpatialFact / perception / active policy</span></div>
-          <div class="funnel-row"><strong>Schema + Data</strong><span>predicate, label, confidence</span></div>
-          <div class="funnel-row"><strong>Regression</strong><span>old spatial facts, safety cases</span></div>
-          <div class="funnel-row"><strong>Shadow Run</strong><span>calibration, query burden</span></div>
-          <div class="funnel-row narrow"><strong>Gray Release</strong><span>rollback ready</span></div>
-          <i class="funnel-pulse" aria-hidden="true"></i>
-        </div>
-        <aside class="visual-caption compact">
-          <div><strong>候选先被收窄</strong><span>任何空间 schema、标签质量或安全不合格的更新都不进入效果比较。</span></div>
-          <div><strong>新旧空间事实同时检查</strong><span>只提升新场景但损害旧关系、旧可达性或安全集的候选会被拒绝。</span></div>
-          <div><strong>灰度之前必须可回滚</strong><span>shadow run 通过后仍只进入受控发布，并保留版本回退证据。</span></div>
-        </aside>
-      </div>
-      <div class="env-grid">
-        <article>
-          <strong>空间收益</strong>
-          <span>spatial grounding、relation predicate 或 reachability 指标提升，且 long-horizon SR 不下降。</span>
-        </article>
-        <article>
-          <strong>旧空间事实保持</strong>
-          <span>regression suite 中旧对象、旧关系、旧路径和旧可达性判断不退化。</span>
-        </article>
-        <article>
-          <strong>安全约束</strong>
-          <span>仿真与真实 shadow run 中 unsafe event 为 0；急停、近碰撞、误抓和越权动作必须单独归档。</span>
-        </article>
-        <article>
-          <strong>可用性约束</strong>
-          <span>unnecessary query、overblocking、inspect、ask-human、abort 分布不能异常漂移，主动学习不能变成过度询问。</span>
+          <strong>Trace 支撑</strong>
+          <span>失败 trace 记录空间事实、主动感知、技能结果和 verifier 判断，用于复盘、回放和后续扩展。</span>
         </article>
       </div>
     </section>
